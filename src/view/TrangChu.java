@@ -234,6 +234,8 @@ public class TrangChu extends javax.swing.JFrame {
 
         MainPanel.setLayout(new java.awt.CardLayout());
 
+        jLabel13.setIcon(new javax.swing.ImageIcon("F:\\JAVA3\\DuAn1_Pro1041\\logos\\trangchu1.jpg")); // NOI18N
+
         javax.swing.GroupLayout TrangChu_PanelLayout = new javax.swing.GroupLayout(TrangChu_Panel);
         TrangChu_Panel.setLayout(TrangChu_PanelLayout);
         TrangChu_PanelLayout.setHorizontalGroup(
@@ -242,7 +244,7 @@ public class TrangChu extends javax.swing.JFrame {
         );
         TrangChu_PanelLayout.setVerticalGroup(
             TrangChu_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
 
         MainPanel.add(TrangChu_Panel, "card2");
@@ -263,7 +265,7 @@ public class TrangChu extends javax.swing.JFrame {
             .addGroup(NhanVien_PanelLayout.createSequentialGroup()
                 .addGap(171, 171, 171)
                 .addComponent(jLabel1)
-                .addContainerGap(265, Short.MAX_VALUE))
+                .addContainerGap(346, Short.MAX_VALUE))
         );
 
         MainPanel.add(NhanVien_Panel, "card3");
@@ -284,7 +286,7 @@ public class TrangChu extends javax.swing.JFrame {
             .addGroup(KhachHang_PanelLayout.createSequentialGroup()
                 .addGap(170, 170, 170)
                 .addComponent(jLabel3)
-                .addContainerGap(266, Short.MAX_VALUE))
+                .addContainerGap(347, Short.MAX_VALUE))
         );
 
         MainPanel.add(KhachHang_Panel, "card4");
@@ -305,7 +307,7 @@ public class TrangChu extends javax.swing.JFrame {
             .addGroup(KhuyenMai_PanelLayout.createSequentialGroup()
                 .addGap(172, 172, 172)
                 .addComponent(jLabel4)
-                .addContainerGap(264, Short.MAX_VALUE))
+                .addContainerGap(345, Short.MAX_VALUE))
         );
 
         MainPanel.add(KhuyenMai_Panel, "card5");
@@ -326,7 +328,7 @@ public class TrangChu extends javax.swing.JFrame {
             .addGroup(SanPham_PanelLayout.createSequentialGroup()
                 .addGap(171, 171, 171)
                 .addComponent(jLabel5)
-                .addContainerGap(265, Short.MAX_VALUE))
+                .addContainerGap(346, Short.MAX_VALUE))
         );
 
         MainPanel.add(SanPham_Panel, "card6");
@@ -347,7 +349,7 @@ public class TrangChu extends javax.swing.JFrame {
             .addGroup(HoaDon_PanelLayout.createSequentialGroup()
                 .addGap(177, 177, 177)
                 .addComponent(jLabel6)
-                .addContainerGap(259, Short.MAX_VALUE))
+                .addContainerGap(340, Short.MAX_VALUE))
         );
 
         MainPanel.add(HoaDon_Panel, "card7");
@@ -368,7 +370,7 @@ public class TrangChu extends javax.swing.JFrame {
             .addGroup(BanHang_PanelLayout.createSequentialGroup()
                 .addGap(173, 173, 173)
                 .addComponent(jLabel7)
-                .addContainerGap(263, Short.MAX_VALUE))
+                .addContainerGap(344, Short.MAX_VALUE))
         );
 
         MainPanel.add(BanHang_Panel, "card8");
@@ -389,7 +391,7 @@ public class TrangChu extends javax.swing.JFrame {
             .addGroup(ThuocTinh_PanelLayout.createSequentialGroup()
                 .addGap(172, 172, 172)
                 .addComponent(jLabel8)
-                .addContainerGap(264, Short.MAX_VALUE))
+                .addContainerGap(345, Short.MAX_VALUE))
         );
 
         MainPanel.add(ThuocTinh_Panel, "card9");
