@@ -15,6 +15,8 @@ public class TrangChu extends javax.swing.JFrame {
      */
     public TrangChu() {
         initComponents();
+        setTitle("Ứng Dụng");
+        setLocationRelativeTo(null);
     }
 
     /**

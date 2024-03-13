@@ -169,14 +169,14 @@ public class DangNhap extends javax.swing.JFrame {
         boolean check2 = false;
         if (txtTaiKhoan.getText().isBlank()) {
             Requied_Name.setText("* Không được để trống !");
-            txtTaiKhoan.setRequestFocusEnabled(true);
+            txtTaiKhoan.requestFocus();
         } else {
             Requied_Name.setText("");
             check1 = true;
         }
         if (pass.isBlank()) {
             Requied_Pass.setText("* Không được để trống !");
-            txtMatKhau.setRequestFocusEnabled(true);
+            txtMatKhau.requestFocus();
         } else {
             Requied_Pass.setText("");
             check2 = true;
