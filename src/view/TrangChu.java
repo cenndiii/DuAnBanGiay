@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package view;
 
 import model.NhanVien;
@@ -110,8 +106,6 @@ public class TrangChu extends javax.swing.JFrame {
         txtCondition = new javax.swing.JTextField();
         rdoTotalBill = new javax.swing.JRadioButton();
         rdoTotalProduct = new javax.swing.JRadioButton();
-        txtSinceC = new com.toedter.calendar.JDateChooser();
-        txtToC = new com.toedter.calendar.JDateChooser();
         jPanel8 = new javax.swing.JPanel();
         btnSearhVoucher = new javax.swing.JButton();
         txtIdS = new javax.swing.JTextField();
@@ -119,8 +113,6 @@ public class TrangChu extends javax.swing.JFrame {
         jLabel22 = new javax.swing.JLabel();
         jLabel43 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
-        txtSince = new com.toedter.calendar.JDateChooser();
-        txtTo = new com.toedter.calendar.JDateChooser();
         jScrollPane5 = new javax.swing.JScrollPane();
         tblVoucher = new javax.swing.JTable();
         SanPham_Panel = new javax.swing.JPanel();
@@ -175,8 +167,6 @@ public class TrangChu extends javax.swing.JFrame {
         jPanel18 = new javax.swing.JPanel();
         jScrollPane15 = new javax.swing.JScrollPane();
         tblDetailedInvoice = new javax.swing.JTable();
-        txtSince2 = new com.toedter.calendar.JDateChooser();
-        txtTo2 = new com.toedter.calendar.JDateChooser();
         BanHang_Panel = new javax.swing.JPanel();
         jPanel13 = new javax.swing.JPanel();
         jScrollPane11 = new javax.swing.JScrollPane();
@@ -392,7 +382,7 @@ public class TrangChu extends javax.swing.JFrame {
 
         MainPanel.setLayout(new java.awt.CardLayout());
 
-        jLabel13.setIcon(new javax.swing.ImageIcon("F:\\JAVA3\\DuAn1_Pro1041\\logos\\trangchu1.jpg")); // NOI18N
+        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/trangchu1.jpg"))); // NOI18N
 
         javax.swing.GroupLayout TrangChu_PanelLayout = new javax.swing.GroupLayout(TrangChu_Panel);
         TrangChu_Panel.setLayout(TrangChu_PanelLayout);
@@ -402,7 +392,7 @@ public class TrangChu extends javax.swing.JFrame {
         );
         TrangChu_PanelLayout.setVerticalGroup(
             TrangChu_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         MainPanel.add(TrangChu_Panel, "card2");
@@ -807,9 +797,7 @@ public class TrangChu extends javax.swing.JFrame {
                                     .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                         .addComponent(txtVoucherID, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE)
                                         .addComponent(txtTitle, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(txtVoucherValue))
-                                    .addComponent(txtSinceC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtToC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(txtVoucherValue))))
                             .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addComponent(jLabel42)
                                 .addGap(30, 30, 30)
@@ -843,14 +831,10 @@ public class TrangChu extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rdoTotalBill)
                     .addComponent(rdoTotalProduct))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel40, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtSinceC, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(14, 14, 14)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel41)
-                    .addComponent(txtToC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addComponent(jLabel40)
+                .addGap(16, 16, 16)
+                .addComponent(jLabel41)
                 .addGap(20, 20, 20)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCreateVoucher)
@@ -887,10 +871,7 @@ public class TrangChu extends javax.swing.JFrame {
                             .addComponent(jLabel22)
                             .addComponent(jLabel23))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtSince, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbxTypeVoucher, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(cbxTypeVoucher, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
@@ -903,14 +884,10 @@ public class TrangChu extends javax.swing.JFrame {
                     .addComponent(cbxTypeVoucher, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel22))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel43)
-                    .addComponent(txtSince, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(14, 14, 14)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel23)
-                    .addComponent(txtTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addComponent(jLabel43)
+                .addGap(16, 16, 16)
+                .addComponent(jLabel23)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addComponent(btnSearhVoucher))
         );
 
@@ -1394,20 +1371,14 @@ public class TrangChu extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(cbxType, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(31, 31, 31)
-                        .addGroup(HoaDon_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(HoaDon_PanelLayout.createSequentialGroup()
-                                .addComponent(jLabel66)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtTo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(HoaDon_PanelLayout.createSequentialGroup()
-                                .addComponent(jLabel67)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtSince2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(78, 78, 78)
+                        .addGroup(HoaDon_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel66)
+                            .addComponent(jLabel67))
+                        .addGap(130, 130, 130)
                         .addComponent(jButton2))
                     .addComponent(jPanel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(138, Short.MAX_VALUE))
+                .addContainerGap(120, Short.MAX_VALUE))
         );
         HoaDon_PanelLayout.setVerticalGroup(
             HoaDon_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1418,21 +1389,14 @@ public class TrangChu extends javax.swing.JFrame {
                         .addComponent(jButton2)
                         .addGap(61, 61, 61))
                     .addGroup(HoaDon_PanelLayout.createSequentialGroup()
-                        .addGroup(HoaDon_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(HoaDon_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(txtSearchBox, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel67))
-                            .addComponent(txtSince2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(HoaDon_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(HoaDon_PanelLayout.createSequentialGroup()
-                                .addGap(8, 8, 8)
-                                .addGroup(HoaDon_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(cbxType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel65)
-                                    .addComponent(jLabel66)))
-                            .addGroup(HoaDon_PanelLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtTo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(HoaDon_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtSearchBox, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel67))
+                        .addGap(8, 8, 8)
+                        .addGroup(HoaDon_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cbxType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel65)
+                            .addComponent(jLabel66))
                         .addGap(20, 20, 20)))
                 .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -2403,9 +2367,6 @@ public class TrangChu extends javax.swing.JFrame {
     private javax.swing.JTextArea txtMoTa;
     private javax.swing.JTextField txtMoneyPay3;
     private javax.swing.JTextField txtSearchBox;
-    private com.toedter.calendar.JDateChooser txtSince;
-    private com.toedter.calendar.JDateChooser txtSince2;
-    private com.toedter.calendar.JDateChooser txtSinceC;
     private javax.swing.JTextField txtSoLuong;
     private javax.swing.JTextField txtStaffName3;
     private javax.swing.JTextField txtTenSP;
@@ -2414,9 +2375,6 @@ public class TrangChu extends javax.swing.JFrame {
     private javax.swing.JTextField txtTimKiem1;
     private javax.swing.JTextField txtTimKiemThuocTinh;
     private javax.swing.JTextField txtTitle;
-    private com.toedter.calendar.JDateChooser txtTo;
-    private com.toedter.calendar.JDateChooser txtTo2;
-    private com.toedter.calendar.JDateChooser txtToC;
     private javax.swing.JTextField txtTotal3;
     private javax.swing.JTextField txtVoucherID;
     private javax.swing.JTextField txtVoucherValue;
