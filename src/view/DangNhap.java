@@ -4,6 +4,7 @@
  */
 package view;
 
+import java.awt.Label;
 import javax.swing.JOptionPane;
 import model.NhanVien;
 import service.DangNhap_Service;
@@ -21,7 +22,7 @@ public class DangNhap extends javax.swing.JFrame {
     }
 
     DangNhap_Service dn = new DangNhap_Service();
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -144,7 +145,7 @@ public class DangNhap extends javax.swing.JFrame {
                 .addComponent(Requied_Name, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel5)
-                .addGap(30, 30, 30)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -167,6 +168,7 @@ public class DangNhap extends javax.swing.JFrame {
         NhanVien nv = dn.login(txtTaiKhoan.getText());
         boolean check1 = false;
         boolean check2 = false;
+        
         if (txtTaiKhoan.getText().isBlank()) {
             Requied_Name.setText("* Không được để trống !");
             txtTaiKhoan.requestFocus();
@@ -188,6 +190,7 @@ public class DangNhap extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Dang nhap thanh cong !");
                 this.dispose();
                 TrangChu tc = new TrangChu();
+                tc.login(nv);
                 tc.setVisible(true);
             }
         }

@@ -10,18 +10,19 @@ package model;
  */
 public class NhanVien {
 
-    private String ID, hoTen, email, matKhau, vaiTro, tinhTrang;
+    private String ID, hoTen, email, matKhau,tinhTrang;
+    private int vaiTro;
 
     public NhanVien() {
     }
 
-    public NhanVien(String ID, String hoTen, String email, String matKhau, String vaiTro, String tinhTrang) {
+    public NhanVien(String ID, String hoTen, String email, String matKhau, String tinhTrang, int vaiTro) {
         this.ID = ID;
         this.hoTen = hoTen;
         this.email = email;
         this.matKhau = matKhau;
-        this.vaiTro = vaiTro;
         this.tinhTrang = tinhTrang;
+        this.vaiTro = vaiTro;
     }
 
     public String getID() {
@@ -56,14 +57,6 @@ public class NhanVien {
         this.matKhau = matKhau;
     }
 
-    public String getVaiTro() {
-        return vaiTro;
-    }
-
-    public void setVaiTro(String vaiTro) {
-        this.vaiTro = vaiTro;
-    }
-
     public String getTinhTrang() {
         return tinhTrang;
     }
@@ -72,5 +65,11 @@ public class NhanVien {
         this.tinhTrang = tinhTrang;
     }
 
-    
+    public int getVaiTro() {
+        return vaiTro;
+    }
+
+    public void setVaiTro(int vaiTro) {
+        this.vaiTro = vaiTro;
+    }
 }
