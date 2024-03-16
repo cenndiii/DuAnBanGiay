@@ -5,6 +5,9 @@
 package view;
 
 import java.awt.Label;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import model.NhanVien;
 import service.DangNhap_Service;
@@ -187,11 +190,15 @@ public class DangNhap extends javax.swing.JFrame {
             if (nv == null || !pass.equals(nv.getMatKhau())) {
                 JOptionPane.showMessageDialog(this, "Co gi do khong dung !");
             } else {
-                JOptionPane.showMessageDialog(this, "Dang nhap thanh cong !");
-                this.dispose();
-                TrangChu tc = new TrangChu();
-                tc.login(nv);
-                tc.setVisible(true);
+                try {
+                    JOptionPane.showMessageDialog(this, "Dang nhap thanh cong !");
+                    this.dispose();
+                    TrangChu tc = new TrangChu();
+                    tc.login(nv);
+                    tc.setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(DangNhap.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }//GEN-LAST:event_btnDangNhapActionPerformed

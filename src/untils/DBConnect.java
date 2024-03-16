@@ -17,7 +17,7 @@ import java.sql.Statement;
 public class DBConnect {
 
     public Connection openConnection() throws SQLException {
-        return DriverManager.getConnection("jdbc:sqlserver://localhost;databaseName=DuAn1_FourShoes;user=sa;password=1234;characterEncoding=UTF-8;encrypt=true;trustservercertificate=true");
+        return DriverManager.getConnection("jdbc:sqlserver://localhost;databaseName=DuAn1_FourShoes;user=sa;password=duy14022004;characterEncoding=UTF-8;encrypt=true;trustservercertificate=true");
     }
 
     public void a() {
