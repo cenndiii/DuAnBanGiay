@@ -22,6 +22,7 @@ public class SanPham_Service {
     ResultSet rs = null;
     String sql = null;
     DBConnect db = new DBConnect();
+    
     public List<SanPham> getAll() throws SQLException {
         list = new ArrayList<>();
 //        sql = "select sp.id,sp.Ten,sp.Gia_nhap,sp.Gia_ban,sp.So_tuong_ton,n.Loai,th.Loai,m.Loai,sz.Loai,sp.Mo_ta from SanPham sp\n"

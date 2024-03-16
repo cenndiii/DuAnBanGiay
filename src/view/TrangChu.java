@@ -1,10 +1,15 @@
 package view;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import model.NhanVien;
+import model.SanPham;
 import model.ThuocTinh;
+import service.SanPham_Service;
 import service.ThuocTinh_Service;
 
 /**
@@ -16,12 +21,16 @@ public class TrangChu extends javax.swing.JFrame {
     /**
      * Creates new form TrangChu
      */
-    public TrangChu() {
+    
+    
+    public TrangChu() throws SQLException {
         initComponents();
         setTitle("Ứng Dụng");
         setLocationRelativeTo(null);
+        fillTable(SPDao.getAll());
     }
-    
+    private SanPham_Service SPDao = new SanPham_Service();
+    private DefaultTableModel model_tblSanPham = new DefaultTableModel();
     private final ThuocTinh_Service tt = new ThuocTinh_Service();
     private List<ThuocTinh> listThuocTinh;
     String bang, loai, hienThiLoai, loaiTimKiem;
@@ -73,6 +82,16 @@ public class TrangChu extends javax.swing.JFrame {
             bang = "NSX";
             loai = "Noi San Xuat";
         }
+    }
+    
+    
+    public void fillTable(List<SanPham> list) {
+        model_tblSanPham.setRowCount(0);
+        model_tblSanPham = (DefaultTableModel) tblQLSanPham.getModel();
+        for (SanPham x : list) {
+            model_tblSanPham.addRow(x.toDataRow());
+        }
+        model_tblSanPham.fireTableDataChanged();
     }
     
     @SuppressWarnings("unchecked")
@@ -2312,7 +2331,11 @@ public class TrangChu extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TrangChu().setVisible(true);
+                try {
+                    new TrangChu().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(TrangChu.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
