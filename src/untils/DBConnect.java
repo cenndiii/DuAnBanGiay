@@ -17,15 +17,15 @@ import java.sql.Statement;
 public class DBConnect {
 
     public Connection openConnection() throws SQLException {
-        return DriverManager.getConnection("jdbc:sqlserver://localhost;databaseName=DA1_FOURSHOES;user=sa;password=1234;encrypt=true;trustservercertificate=true");
+        return DriverManager.getConnection("jdbc:sqlserver://localhost;databaseName=DuAn1_FourShoes;user=sa;password=1234;characterEncoding=UTF-8;encrypt=true;trustservercertificate=true");
     }
 
     public void a() {
         try {
             Statement s = openConnection().createStatement();
-            ResultSet rs = s.executeQuery("Select * from NHANVIEN");
+            ResultSet rs = s.executeQuery("Select * from MauSac");
             while (rs.next()) {
-                System.out.println(rs.getString(1));
+                System.out.println(rs.getString(2));
             }
         } catch (Exception e) {
         }
