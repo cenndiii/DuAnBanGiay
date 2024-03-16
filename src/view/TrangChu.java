@@ -3,8 +3,6 @@ package view;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import model.NhanVien;
 import model.SanPham;
@@ -2331,11 +2329,7 @@ public class TrangChu extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                try {
-                    new TrangChu().setVisible(true);
-                } catch (SQLException ex) {
-                    Logger.getLogger(TrangChu.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                new TrangChu().setVisible(true);
             }
         });
     }
