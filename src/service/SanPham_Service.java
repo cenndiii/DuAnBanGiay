@@ -21,17 +21,22 @@ public class SanPham_Service {
     PreparedStatement ps = null;
     ResultSet rs = null;
     String sql = null;
-
-    public List<SanPham> getAll() {
+    DBConnect db = new DBConnect();
+    public List<SanPham> getAll() throws SQLException {
         list = new ArrayList<>();
-        con = DBConnect.getConnection();
-        sql = "select sp.id,sp.Ten,sp.Gia_nhap,sp.Gia_ban,sp.So_tuong_ton,n.Loai,th.Loai,m.Loai,sz.Loai,sp.Mo_ta from SanPham sp\n"
+//        sql = "select sp.id,sp.Ten,sp.Gia_nhap,sp.Gia_ban,sp.So_tuong_ton,n.Loai,th.Loai,m.Loai,sz.Loai,sp.Mo_ta from SanPham sp\n"
+//                + "join NSX n on sp.IdNsx = n.Id\n"
+//                + "join ThuongHieu th on th.Id = sp.IdTH\n"
+//                + "join MauSac m on m.Id = sp.IdMauSac\n"
+//                + "join KichCo sz on sz.Id = sp.IdKC";
+        
+        
+        try {
+            ps = db.openConnection().prepareStatement("select sp.id,sp.Ten,sp.Gia_nhap,sp.Gia_ban,sp.So_tuong_ton,n.Loai,th.Loai,m.Loai,sz.Loai,sp.Mo_ta from SanPham sp\n"
                 + "join NSX n on sp.IdNsx = n.Id\n"
                 + "join ThuongHieu th on th.Id = sp.IdTH\n"
                 + "join MauSac m on m.Id = sp.IdMauSac\n"
-                + "join KichCo sz on sz.Id = sp.IdKC";
-        try {
-            ps = con.prepareStatement(sql);
+                + "join KichCo sz on sz.Id = sp.IdKC");
             rs = ps.executeQuery();
 
             while (rs.next()) {
