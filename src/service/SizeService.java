@@ -22,13 +22,22 @@ public class SizeService {
     public List<Size> getAll() {
         try {
             
+<<<<<<< HEAD
             try(PreparedStatement ps = db.openConnection().prepareStatement("select * from KichCo");) {
+=======
+            try(PreparedStatement ps = db.openConnection().prepareStatement("select Id, Loai,Chi_Tiet from KichCo");) {
+>>>>>>> 7ff67621f32b3f1714ffbfcca5e1cfe99dc19da2
                 try(ResultSet rs = ps.executeQuery();) {
                     List<Size> list = new ArrayList<>();
                     while (rs.next()) {                        
                         Size x = new Size();
                         x.setId(rs.getInt("Id"));
+<<<<<<< HEAD
                         x.setChiTiet(rs.getString(3));
+=======
+                        x.setLoai(rs.getString("Loai"));
+                        x.setChiTiet(rs.getString("Chi_Tiet"));
+>>>>>>> 7ff67621f32b3f1714ffbfcca5e1cfe99dc19da2
                         list.add(x);
                     }
                     return list;
