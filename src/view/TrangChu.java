@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.table.DefaultTableModel;
 import model.Hang;
 import model.MauSac;
@@ -30,8 +31,6 @@ public class TrangChu extends javax.swing.JFrame {
     /**
      * Creates new form TrangChu
      */
-    
-    
     public TrangChu() throws SQLException {
         initComponents();
         setTitle("Ứng Dụng");
@@ -42,12 +41,12 @@ public class TrangChu extends javax.swing.JFrame {
         fillSize();
         fillXuatXu();
     }
-    
+
     private MauSacService mauSacDao = new MauSacService();
     private SizeService sizeDao = new SizeService();
     private XuatXuService xuatXuDao = new XuatXuService();
     private HangService hangService = new HangService();
-    
+
     private SanPham_Service SPDao = new SanPham_Service();
     private DefaultTableModel model_tblSanPham = new DefaultTableModel();
     private final ThuocTinh_Service tt = new ThuocTinh_Service();
@@ -55,7 +54,7 @@ public class TrangChu extends javax.swing.JFrame {
     String bang, loai, hienThiLoai, loaiTimKiem;
     int index = -1;
     DefaultTableModel dtm;
-    
+
     public void login(NhanVien nv) {
         lblRole.setText(nv.getVaiTro() != 0 ? "Quản Lý" : " Nhân Viên");
         if (nv.getVaiTro() == 0) {
@@ -63,24 +62,30 @@ public class TrangChu extends javax.swing.JFrame {
             btnNhanVien.setEnabled(false);
         }
     }
-    
+
     private void hienThiBangThuocTinh(List<ThuocTinh> list) {
         dtm = (DefaultTableModel) tblThuocTinh.getModel();
         dtm.setRowCount(0);
-        
+
         for (ThuocTinh Tt : list) {
             hienThiLoai = switch (Tt.getLoai()) {
-                case "Kich Co" -> "Kích cỡ";
-                case "Noi San Xuat" -> "Nơi Sản Xuất";
-                case "Chat Lieu" -> "Chất Liệu";
-                case "Thuong Hieu" -> "Thương Hiệu";
-                case "Danh Muc Sp" -> "Danh Mục Sản Phẩm";
-                default -> "Màu Sắc";
+                case "Kich Co" ->
+                    "Kích cỡ";
+                case "Noi San Xuat" ->
+                    "Nơi Sản Xuất";
+                case "Chat Lieu" ->
+                    "Chất Liệu";
+                case "Thuong Hieu" ->
+                    "Thương Hiệu";
+                case "Danh Muc Sp" ->
+                    "Danh Mục Sản Phẩm";
+                default ->
+                    "Màu Sắc";
             };
             dtm.addRow(new Object[]{Tt.getId(), hienThiLoai, Tt.getChiTiet()});
         }
     }
-    
+
     private void CheckLoai() {
         if (cbxThuocTinh.getSelectedItem().equals("Kích cỡ")) {
             bang = "KichCo";
@@ -102,8 +107,41 @@ public class TrangChu extends javax.swing.JFrame {
             loai = "Noi San Xuat";
         }
     }
-    
-    
+
+    private String CheckBang() {
+        if (cbxTimTheoThuocTinh.getSelectedItem().equals("Theo Kích cỡ")) {
+            return "KichCo";
+        } else if (cbxTimTheoThuocTinh.getSelectedItem().equals("Theo Màu Sắc")) {
+            return "MauSac";
+        } else if (cbxTimTheoThuocTinh.getSelectedItem().equals("Theo Thương Hiệu")) {
+            return "ThuongHieu";
+        } else if (cbxTimTheoThuocTinh.getSelectedItem().equals("Theo Danh Mục Sản Phẩm")) {
+            return "DanhMucSp";
+        } else if (cbxTimTheoThuocTinh.getSelectedItem().equals("Theo Chất Liệu")) {
+            return "ChatLieu";
+        } else {
+            return "NSX";
+        }
+    }
+
+    private void timKiemTheoLoai() {
+        if (cbxTimTheoThuocTinh.getSelectedItem().equals("Tất Cả")) {
+            hienThiBangThuocTinh(tt.getFullData());
+        } else if (cbxTimTheoThuocTinh.getSelectedItem().equals(("Theo Màu Sắc"))) {
+            hienThiBangThuocTinh(tt.getDataFromEachTable(CheckBang()));
+        } else if (cbxTimTheoThuocTinh.getSelectedItem().equals(("Theo Kích cỡ"))) {
+            hienThiBangThuocTinh(tt.getDataFromEachTable(CheckBang()));
+        } else if (cbxTimTheoThuocTinh.getSelectedItem().equals(("Theo Thương Hiệu"))) {
+            hienThiBangThuocTinh(tt.getDataFromEachTable(CheckBang()));
+        } else if (cbxTimTheoThuocTinh.getSelectedItem().equals(("Theo Chất Liệu"))) {
+            hienThiBangThuocTinh(tt.getDataFromEachTable(CheckBang()));
+        } else if (cbxTimTheoThuocTinh.getSelectedItem().equals(("Theo Danh Mục Sản Phẩm"))) {
+            hienThiBangThuocTinh(tt.getDataFromEachTable(CheckBang()));
+        } else {
+            hienThiBangThuocTinh(tt.getDataFromEachTable(CheckBang()));
+        }
+    }
+
     public void fillTable(List<SanPham> list) {
         model_tblSanPham.setRowCount(0);
         model_tblSanPham = (DefaultTableModel) tblQLSanPham.getModel();
@@ -112,13 +150,13 @@ public class TrangChu extends javax.swing.JFrame {
         }
         model_tblSanPham.fireTableDataChanged();
     }
-    
+
     public void fillMauSac() {
         DefaultComboBoxModel model = (DefaultComboBoxModel) cboMauSac.getModel();
         model.removeAllElements();
         List<MauSac> list = mauSacDao.getAll();
         for (MauSac x : list) {
-            model.addElement(x.getLoai());
+            model.addElement(x.getChiTiet());
         }
     }
 
@@ -127,7 +165,7 @@ public class TrangChu extends javax.swing.JFrame {
         model.removeAllElements();
         List<Size> list = sizeDao.getAll();
         for (Size x : list) {
-            model.addElement(x.getLoai());
+            model.addElement(x.getChiTiet());
         }
     }
 
@@ -136,7 +174,7 @@ public class TrangChu extends javax.swing.JFrame {
         model.removeAllElements();
         List<Hang> list = hangService.getAll();
         for (Hang x : list) {
-            model.addElement(x.getLoai());
+            model.addElement(x.getChiTiet());
         }
     }
 
@@ -145,10 +183,10 @@ public class TrangChu extends javax.swing.JFrame {
         model.removeAllElements();
         List<XuatXu> list = xuatXuDao.getAll();
         for (XuatXu x : list) {
-            model.addElement(x.getLoai());
+            model.addElement(x.getChiTiet());
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -1904,7 +1942,12 @@ public class TrangChu extends javax.swing.JFrame {
 
         jLabel9.setText("Tìm Kiếm");
 
-        cbxTimTheoThuocTinh.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Theo Kích cỡ", "Theo Màu Sắc", "Theo Thương Hiệu", "Theo Danh Mục Sản Phẩm", "Theo Chất Liệu", "Theo Nơi Sản Xuất" }));
+        cbxTimTheoThuocTinh.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất Cả", "Theo Kích cỡ", "Theo Màu Sắc", "Theo Thương Hiệu", "Theo Danh Mục Sản Phẩm", "Theo Chất Liệu", "Theo Nơi Sản Xuất" }));
+        cbxTimTheoThuocTinh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxTimTheoThuocTinhActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout ThuocTinh_PanelLayout = new javax.swing.GroupLayout(ThuocTinh_Panel);
         ThuocTinh_Panel.setLayout(ThuocTinh_PanelLayout);
@@ -2198,7 +2241,7 @@ public class TrangChu extends javax.swing.JFrame {
 
     private void tblQLSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblQLSanPhamMouseClicked
         index = tblQLSanPham.getSelectedRow();
-        if(index > -1){
+        if (index > -1) {
             txtTenSP.setText(tblQLSanPham.getValueAt(index, 1).toString());
             cboHang.setSelectedItem(tblQLSanPham.getValueAt(index, 6).toString());
             cboXuatSu.setSelectedItem(tblQLSanPham.getValueAt(index, 5).toString());
@@ -2208,7 +2251,7 @@ public class TrangChu extends javax.swing.JFrame {
             cboSize.setSelectedItem(tblQLSanPham.getValueAt(index, 8).toString());
             txtSoLuong.setText(tblQLSanPham.getValueAt(index, 4).toString());
             txtMoTa.setText(tblQLSanPham.getValueAt(index, 9).toString());
-            
+
         }
     }//GEN-LAST:event_tblQLSanPhamMouseClicked
 
@@ -2299,22 +2342,19 @@ public class TrangChu extends javax.swing.JFrame {
     private void btnThemThuocTinhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemThuocTinhActionPerformed
         CheckLoai();
         tt.themThuocTinh(bang, loai, txtChiTietThuocTinh.getText());
-        listThuocTinh = tt.getFullData();
-        hienThiBangThuocTinh(listThuocTinh);
+        timKiemTheoLoai();
     }//GEN-LAST:event_btnThemThuocTinhActionPerformed
 
     private void btnSuaThuocTinhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaThuocTinhActionPerformed
 //        CheckLoai();
         tt.suaThuocTinh(bang, txtChiTietThuocTinh.getText(), tt.getFullData().get(index).getId());
-        listThuocTinh = tt.getFullData();
-        hienThiBangThuocTinh(listThuocTinh);
+        timKiemTheoLoai();
     }//GEN-LAST:event_btnSuaThuocTinhActionPerformed
 
     private void btnXoaThuocTinhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaThuocTinhActionPerformed
         CheckLoai();
         tt.xoaThuocTinh(bang, tt.getFullData().get(index).getId());
-        listThuocTinh = tt.getFullData();
-        hienThiBangThuocTinh(listThuocTinh);
+        timKiemTheoLoai();
     }//GEN-LAST:event_btnXoaThuocTinhActionPerformed
 
     private void tblThuocTinhMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblThuocTinhMouseClicked
@@ -2329,7 +2369,7 @@ public class TrangChu extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void txtTimKiemThuocTinhKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemThuocTinhKeyReleased
-        if (txtTimKiemThuocTinh.getText().equalsIgnoreCase("")) {
+        if (txtTimKiemThuocTinh.getText().equalsIgnoreCase("")&& cbxTimTheoThuocTinh.getSelectedItem().equals("Tất Cả")) {
             hienThiBangThuocTinh(tt.getFullData());
         } else {
             loaiTimKiem = tt.checkLoaiTimKiem(String.valueOf(cbxTimTheoThuocTinh.getSelectedItem()));
@@ -2337,6 +2377,12 @@ public class TrangChu extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_txtTimKiemThuocTinhKeyReleased
+
+    private void cbxTimTheoThuocTinhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxTimTheoThuocTinhActionPerformed
+
+        timKiemTheoLoai();
+
+    }//GEN-LAST:event_cbxTimTheoThuocTinhActionPerformed
 
     /**
      * @param args the command line arguments
