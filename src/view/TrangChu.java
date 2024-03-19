@@ -1,6 +1,13 @@
 package view;
 
 import java.util.List;
+<<<<<<< Updated upstream
+=======
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+>>>>>>> Stashed changes
 import javax.swing.table.DefaultTableModel;
 import model.NhanVien;
 import model.SanPham;
@@ -15,26 +22,102 @@ public class TrangChu extends javax.swing.JFrame {
     /**
      * Creates new form TrangChu
      */
+<<<<<<< Updated upstream
     private SanPham_Service SPDao = new SanPham_Service();
     private DefaultTableModel model_tblSanPham = new DefaultTableModel();
     
     public TrangChu() {
+=======
+    public TrangChu() throws SQLException {
+>>>>>>> Stashed changes
         initComponents();
         setTitle("Ứng Dụng");
         setLocationRelativeTo(null);
         fillTable(SPDao.getAll());
     }
 
+<<<<<<< Updated upstream
     public void login(NhanVien nv){
         lblRole.setText(nv.getVaiTro() != 0 ? "Quản Lý" :" Nhân Viên");
         if (nv.getVaiTro() != 0) {
             
         }else{
+=======
+    private MauSacService mauSacDao = new MauSacService();
+    private SizeService sizeDao = new SizeService();
+    private XuatXuService xuatXuDao = new XuatXuService();
+    private HangService hangService = new HangService();
+
+    private SanPham_Service SPDao = new SanPham_Service();
+    private DefaultTableModel model_tblSanPham = new DefaultTableModel();
+    private final ThuocTinh_Service tt = new ThuocTinh_Service();
+    private List<ThuocTinh> listThuocTinh;
+    String bang, loai, hienThiLoai, loaiTimKiem;
+    int index = -1;
+    public static String a1;
+    public static String a2;
+    public static String a3;
+    public static String a4;
+    DefaultTableModel dtm;
+
+    public void login(NhanVien nv) {
+        lblRole.setText(nv.getVaiTro() != 0 ? "Quản Lý" : " Nhân Viên");
+        if (nv.getVaiTro() == 0) {
+>>>>>>> Stashed changes
             btnThuocTinh.setEnabled(false);
             btnNhanVien.setEnabled(false);
         }
     }
+<<<<<<< Updated upstream
     
+=======
+
+    private void hienThiBangThuocTinh(List<ThuocTinh> list) {
+        dtm = (DefaultTableModel) tblThuocTinh.getModel();
+        dtm.setRowCount(0);
+
+        for (ThuocTinh Tt : list) {
+            hienThiLoai = switch (Tt.getLoai()) {
+                case "Kich Co" ->
+                    "Kích cỡ";
+                case "Noi San Xuat" ->
+                    "Nơi Sản Xuất";
+                case "Chat Lieu" ->
+                    "Chất Liệu";
+                case "Thuong Hieu" ->
+                    "Thương Hiệu";
+                case "Danh Muc Sp" ->
+                    "Danh Mục Sản Phẩm";
+                default ->
+                    "Màu Sắc";
+            };
+            dtm.addRow(new Object[]{Tt.getId(), hienThiLoai, Tt.getChiTiet()});
+        }
+    }
+
+    private void CheckLoai() {
+        if (cbxThuocTinh.getSelectedItem().equals("Kích cỡ")) {
+            bang = "KichCo";
+            loai = "Kich Co";
+        } else if (cbxThuocTinh.getSelectedItem().equals("Màu Sắc")) {
+            bang = "MauSac";
+            loai = "Mau Sac";
+        } else if (cbxThuocTinh.getSelectedItem().equals("Thương Hiệu")) {
+            bang = "ThuongHieu";
+            loai = "Thuong Hieu";
+        } else if (cbxThuocTinh.getSelectedItem().equals("Danh Mục Sản Phẩm")) {
+            bang = "DanhMucSp";
+            loai = "Danh Muc Sp";
+        } else if (cbxThuocTinh.getSelectedItem().equals("Chất Liệu")) {
+            bang = "ChatLieu";
+            loai = "Chat Lieu";
+        } else {
+            bang = "NSX";
+            loai = "Noi San Xuat";
+        }
+    }
+
+>>>>>>> Stashed changes
     public void fillTable(List<SanPham> list) {
         model_tblSanPham.setRowCount(0);
         model_tblSanPham = (DefaultTableModel) tblQLSanPham.getModel();
@@ -43,8 +126,90 @@ public class TrangChu extends javax.swing.JFrame {
         }
         model_tblSanPham.fireTableDataChanged();
     }
+<<<<<<< Updated upstream
     
     
+=======
+
+    public void fillMauSac() {
+        DefaultComboBoxModel model = (DefaultComboBoxModel) cboMauSac.getModel();
+        model.removeAllElements();
+        List<MauSac> list = mauSacDao.getAll();
+        for (MauSac x : list) {
+            model.addElement(x.getChiTiet());
+        }
+    }
+
+    public void fillSize() {
+        DefaultComboBoxModel model = (DefaultComboBoxModel) cboSize.getModel();
+        model.removeAllElements();
+        List<Size> list = sizeDao.getAll();
+        for (Size x : list) {
+            model.addElement(x.getChiTiet());
+        }
+    }
+
+    public void fillHang() {
+        DefaultComboBoxModel model = (DefaultComboBoxModel) cboHang.getModel();
+        model.removeAllElements();
+        List<Hang> list = hangService.getAll();
+        for (Hang x : list) {
+            model.addElement(x.getChiTiet());
+        }
+    }
+
+    public void fillXuatXu() {
+        DefaultComboBoxModel model = (DefaultComboBoxModel) cboXuatSu.getModel();
+        model.removeAllElements();
+        List<XuatXu> list = xuatXuDao.getAll();
+        for (XuatXu x : list) {
+            model.addElement(x.getChiTiet());
+        }
+    }
+
+    public SanPham readFrom() {
+        String ten = txtTenSP.getText();
+        double giaNhap = Double.valueOf(txtGiaNhap.getText());
+        double giaBan = Double.valueOf(txtGiaBan.getText());
+        int soluong = Integer.valueOf(txtSoLuong.getText());
+        String moTa = txtMoTa.getText();
+
+        index = cboHang.getSelectedIndex();
+        List<Hang> list = hangService.getAll();
+        for (int i = 0; i < list.size(); i++) {
+            if (i == index) {
+                a1 = String.valueOf(list.get(i).getId());
+            }
+        }
+
+        index = cboXuatSu.getSelectedIndex();
+        List<XuatXu> list2 = xuatXuDao.getAll();
+        for (int i = 0; i < list2.size(); i++) {
+            if (i == index) {
+                a2 = String.valueOf(list2.get(i).getId());
+            }
+        }
+
+        index = cboMauSac.getSelectedIndex();
+        List<MauSac> list3 = mauSacDao.getAll();
+        for (int i = 0; i < list3.size(); i++) {
+            if (i == index) {
+                a3 = String.valueOf(list3.get(i).getId());
+            }
+        }
+
+        index = cboSize.getSelectedIndex();
+        List<Size> list4 = sizeDao.getAll();
+        for (int i = 0; i < list4.size(); i++) {
+            if (i == index) {
+                a4 = String.valueOf(list4.get(i).getId());
+            }
+        }
+
+        return new SanPham(ten, giaNhap, giaBan, soluong, a2, a1, a3, a4, moTa);
+    }
+
+>>>>>>> Stashed changes
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -2062,11 +2227,42 @@ public class TrangChu extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void tblQLSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblQLSanPhamMouseClicked
+<<<<<<< Updated upstream
         
+=======
+        index = tblQLSanPham.getSelectedRow();
+        if (index > -1) {
+            txtTenSP.setText(tblQLSanPham.getValueAt(index, 1).toString());
+            cboHang.setSelectedItem(tblQLSanPham.getValueAt(index, 6).toString());
+            cboXuatSu.setSelectedItem(tblQLSanPham.getValueAt(index, 5).toString());
+            txtGiaNhap.setText(tblQLSanPham.getValueAt(index, 2).toString());
+            txtGiaBan.setText(tblQLSanPham.getValueAt(index, 3).toString());
+            cboMauSac.setSelectedItem(tblQLSanPham.getValueAt(index, 7).toString());
+            cboSize.setSelectedItem(tblQLSanPham.getValueAt(index, 8).toString());
+            txtSoLuong.setText(tblQLSanPham.getValueAt(index, 4).toString());
+            txtMoTa.setText(tblQLSanPham.getValueAt(index, 9).toString());
+
+        }
+>>>>>>> Stashed changes
     }//GEN-LAST:event_tblQLSanPhamMouseClicked
 
     private void btnThem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThem2ActionPerformed
+<<<<<<< Updated upstream
        
+=======
+        try {
+            SanPham sp = readFrom();
+            if (SPDao.insert(sp) != null) {
+                fillTable(SPDao.getAll());
+                JOptionPane.showMessageDialog(this, "Thêm thành công!");
+            } else {
+                JOptionPane.showMessageDialog(this, "Thêm thất bại!");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            
+        }
+>>>>>>> Stashed changes
     }//GEN-LAST:event_btnThem2ActionPerformed
 
     private void btnXoa2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoa2ActionPerformed
