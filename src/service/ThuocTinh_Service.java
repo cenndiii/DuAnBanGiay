@@ -39,6 +39,19 @@ public class ThuocTinh_Service {
         return list;
     }
 
+    public List<ThuocTinh> getDataFromEachTable(String bang) {
+        List<ThuocTinh> list = new ArrayList<>();
+        try {
+            Statement s = dbcn.openConnection().createStatement();
+            ResultSet rs = s.executeQuery("select * from "+ bang);
+            while (rs.next()) {
+                list.add(new ThuocTinh(rs.getInt("Id"), rs.getString("Loai"), rs.getString("Chi_Tiet")));
+            }
+        } catch (SQLException e) {
+        }
+        return list;
+    }
+
     public void themThuocTinh(String bang, String loai, String chiTietThuocTinh) {
         try {
             try (PreparedStatement ps = dbcn.openConnection().prepareStatement("insert into " + bang + " values(?,?)")) {
@@ -81,16 +94,18 @@ public class ThuocTinh_Service {
                 "Danh Muc Sp";
             case "Theo Chất Liệu" ->
                 "Chat Lieu";
-            default ->
+            case "Nơi Sản Xuất" ->
                 "Noi San Xuat";
+            default ->
+                "Tat ca";
         };
     }
 
-    public List<ThuocTinh> timTheoThuocTinh(String loai,String chiTiet) {
+    public List<ThuocTinh> timTheoThuocTinh(String loai, String chiTiet) {
         List<ThuocTinh> list = new ArrayList<>();
         for (ThuocTinh thuocTinh : getFullData()) {
             if (thuocTinh.getLoai().equals(loai)) {
-                if(thuocTinh.getChiTiet().contains(chiTiet)){
+                if (thuocTinh.getChiTiet().contains(chiTiet)) {
                     list.add(thuocTinh);
                 }
             }
