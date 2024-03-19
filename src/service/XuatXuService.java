@@ -21,15 +21,13 @@ public class XuatXuService {
     DBConnect db = new DBConnect();
     public List<XuatXu> getAll() {
         try {
-            
-            try(PreparedStatement ps = db.openConnection().prepareStatement("select Id, Loai,Chi_Tiet from NSX");) {
+            try(PreparedStatement ps = db.openConnection().prepareStatement("select * from NSX");) {
                 try(ResultSet rs = ps.executeQuery();) {
                     List<XuatXu> list = new ArrayList<>();
                     while (rs.next()) {                        
                         XuatXu x = new XuatXu();
                         x.setId(rs.getInt("Id"));
-                        x.setLoai(rs.getString("Loai"));
-                        x.setChiTiet(rs.getString("Chi_Tiet"));
+                        x.setChiTiet(rs.getString(3));
                         list.add(x);
                     }
                     return list;

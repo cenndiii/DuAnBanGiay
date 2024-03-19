@@ -20,14 +20,13 @@ public class MauSacService {
     public List<MauSac> getAll() {
         try {
            
-            try(PreparedStatement ps = db.openConnection().prepareStatement("select id, Loai,Chi_Tiet from MauSac");) {
+            try(PreparedStatement ps = db.openConnection().prepareStatement("select * from MauSac");) {
                 try(ResultSet rs = ps.executeQuery();) {
                     List<MauSac> list = new ArrayList<>();
                     while (rs.next()) {                        
                         MauSac x = new MauSac();
                         x.setId(rs.getInt("Id"));
-                        x.setLoai(rs.getString("Loai"));
-                        x.setChiTiet(rs.getString("Chi_Tiet"));
+                        x.setChiTiet(rs.getString(3));
                         list.add(x);
                     }
                     return list;
