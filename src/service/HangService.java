@@ -24,13 +24,12 @@ public class HangService {
     public List<Hang> getAll() {
         try {
             
-            try(PreparedStatement ps = db.openConnection().prepareStatement("select id, Loai,Chi_Tiet from ThuongHieu");) {
+            try(PreparedStatement ps = db.openConnection().prepareStatement("select * from ThuongHieu");) {
                 try(ResultSet rs = ps.executeQuery();) {
                     List<Hang> list = new ArrayList<>();
                     while (rs.next()) {                        
                         Hang x = new Hang();
                         x.setId(rs.getInt("Id"));
-                        x.setLoai(rs.getString("Loai"));
                         x.setChiTiet(rs.getString("Chi_Tiet"));
                         list.add(x);
                     }
