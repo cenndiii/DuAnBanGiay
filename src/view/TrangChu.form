@@ -2661,16 +2661,20 @@
                 <Component class="javax.swing.JComboBox" name="cbxTimTheoThuocTinh">
                   <Properties>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                      <StringArray count="6">
-                        <StringItem index="0" value="Theo K&#xed;ch c&#x1ee1;"/>
-                        <StringItem index="1" value="Theo M&#xe0;u S&#x1eaf;c"/>
-                        <StringItem index="2" value="Theo Th&#x1b0;&#x1a1;ng Hi&#x1ec7;u"/>
-                        <StringItem index="3" value="Theo Danh M&#x1ee5;c S&#x1ea3;n Ph&#x1ea9;m"/>
-                        <StringItem index="4" value="Theo Ch&#x1ea5;t Li&#x1ec7;u"/>
-                        <StringItem index="5" value="Theo N&#x1a1;i S&#x1ea3;n Xu&#x1ea5;t"/>
+                      <StringArray count="7">
+                        <StringItem index="0" value="T&#x1ea5;t C&#x1ea3;"/>
+                        <StringItem index="1" value="Theo K&#xed;ch c&#x1ee1;"/>
+                        <StringItem index="2" value="Theo M&#xe0;u S&#x1eaf;c"/>
+                        <StringItem index="3" value="Theo Th&#x1b0;&#x1a1;ng Hi&#x1ec7;u"/>
+                        <StringItem index="4" value="Theo Danh M&#x1ee5;c S&#x1ea3;n Ph&#x1ea9;m"/>
+                        <StringItem index="5" value="Theo Ch&#x1ea5;t Li&#x1ec7;u"/>
+                        <StringItem index="6" value="Theo N&#x1a1;i S&#x1ea3;n Xu&#x1ea5;t"/>
                       </StringArray>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbxTimTheoThuocTinhActionPerformed"/>
+                  </Events>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                   </AuxValues>
