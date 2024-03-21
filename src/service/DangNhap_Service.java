@@ -15,11 +15,11 @@ public class DangNhap_Service {
 
     public NhanVien login(String ID) {
         try {
-            PreparedStatement ps = db.openConnection().prepareStatement("select * from NHANVIEN where ID = ?");
+            PreparedStatement ps = db.openConnection().prepareStatement("select * from Users where ID = ?");
             ps.setString(1, ID);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                return new NhanVien(rs.getString("ID"), rs.getString("HoTenNV"), rs.getString("Email"), rs.getString("Matkhau"), rs.getString("TinhTrang"), rs.getInt("VaiTro"));
+                return new NhanVien(rs.getString("Id"), rs.getString("Ten"), rs.getString("Email"), rs.getString("Mat_khau"), rs.getString("Trang_thai"), rs.getInt("Vai_tro"));
             }
         } catch (Exception e) {
             return null;

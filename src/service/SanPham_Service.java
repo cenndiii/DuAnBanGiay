@@ -28,28 +28,32 @@ public class SanPham_Service {
         list = new ArrayList<>();
         con = db.openConnection();
         sql = """
-              select sp.id,sp.Ten,sp.Gia_nhap,sp.Gia_ban,sp.So_tuong_ton,n.Loai,th.Loai,m.Loai,sz.Loai,sp.Mo_ta from SanPham sp
-              join NSX n on sp.IdNsx = n.Id
-              join ThuongHieu th on th.Id = sp.IdTH
-              join MauSac m on m.Id = sp.IdMauSac
-              join KichCo sz on sz.Id = sp.IdKC"""
-        ;
+              select sp.Id, sp.Ten, sp.So_tuong_ton, sp.Gia_nhap, Sp.Gia_ban, sp.Mo_ta, n.Chi_Tiet,m.Chi_Tiet,dmsp.Chi_Tiet,sz.Chi_Tiet,cl.Chi_Tiet,th.Chi_Tiet,sp.IdKM from SanPham sp
+                                                        join NSX n on sp.IdNsx = n.Id
+                                                        join ThuongHieu th on th.Id = sp.IdTH
+                                                        join MauSac m on m.Id = sp.IdMauSac
+                                                        join KichCo sz on sz.Id = sp.IdKC
+                                                        join ChatLieu cl on sp.IdCL =cl.Id
+                                                        join DanhMucSP dmsp on sp.IdDMuc = dmsp.Id
+                            				left join KhuyenMai km on sp.IdKM = km.Id""";
         try {
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
 
             while (rs.next()) {
                 SanPham sp = new SanPham(
-                        rs.getInt(1),
-                        rs.getString(2),
-                        rs.getDouble(3),
-                        rs.getDouble(4),
-                        rs.getInt(5),
-                        rs.getString(6),
+                        rs.getInt("Id"),
+                        rs.getString("Ten"),
+                        rs.getDouble("Gia_nhap"),
+                        rs.getDouble("Gia_ban"),
+                        rs.getInt("So_tuong_ton"),
                         rs.getString(7),
+                        rs.getString(12),
                         rs.getString(8),
+                        rs.getString(10),
+                        rs.getString(11),
                         rs.getString(9),
-                        rs.getString(10));
+                        rs.getString(6));
 
                 list.add(sp);
             }
@@ -63,7 +67,7 @@ public class SanPham_Service {
     public Integer insert(SanPham x) {
         Integer row = null;
         try {
-            try (PreparedStatement PS = db.openConnection().prepareStatement("insert into SanPham(Ten,Gia_nhap,Gia_ban,So_tuong_ton,IdNsx,IdTH,IdMauSac,IdKC,Mo_ta) values(?,?,?,?,?,?,?,?,?)");) {
+            try (PreparedStatement PS = db.openConnection().prepareStatement("insert into SanPham(Ten,Gia_nhap,Gia_ban,So_tuong_ton,IdNsx,IdTH,IdMauSac,IdKC,Mo_ta,IdCL,IdDMuc) values(?,?,?,?,?,?,?,?,?,?,?)");) {
                 PS.setObject(1, x.getTenSP());
                 PS.setObject(2, x.getGiaNhap());
                 PS.setObject(3, x.getGiaBan());
@@ -73,11 +77,48 @@ public class SanPham_Service {
                 PS.setObject(7, x.getMauSac());
                 PS.setObject(8, x.getSize());
                 PS.setObject(9, x.getMoTa());
+                PS.setObject(10, x.getChatLieu());
+                PS.setObject(11, x.getDanhMuc());
                 row = PS.executeUpdate();
                 return row;
             }
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
+        }
+    }
+
+    public Integer update(SanPham x) {
+        Integer row = null;
+        try {
+            try (PreparedStatement PS = db.openConnection().prepareStatement("update SanPham set Ten= ?, So_tuong_ton = ?, Gia_nhap = ? ,Gia_ban = ? ,Mo_ta = ? , IdNsx =? ,IdMauSac = ? ,IdDMuc = ?,IdKC = ?, IdCL = ?, IdTH = ?, IdKM = null where Id = ?")) {
+                PS.setObject(1, x.getTenSP());
+                PS.setObject(2, x.getSoLuong());
+                PS.setObject(3, x.getGiaNhap());
+                PS.setObject(4, x.getGiaBan());
+                PS.setObject(5, x.getMoTa());
+                PS.setObject(6, x.getXuatSu());
+                PS.setObject(7, x.getMauSac());
+                PS.setObject(8, x.getDanhMuc());
+                PS.setObject(9, x.getSize());
+                PS.setObject(10, x.getChatLieu());
+                PS.setObject(11, x.getHang());
+                PS.setObject(12, x.getIdSP());
+                row = PS.executeUpdate();
+                return row;
+            }
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public Integer delete(int id) {
+        Integer row = null;
+        try (PreparedStatement PS = db.openConnection().prepareStatement("delete from SanPham where Id = ?")) {
+            PS.setInt(1, id);
+            row = PS.executeUpdate();
+            return row;
+        } catch (Exception e) {
             return null;
         }
     }
