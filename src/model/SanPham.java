@@ -28,6 +28,11 @@ public class SanPham {
         };
     }
 
+    public Object[] toDataBhSanPhamRow() {
+        return new Object[]{
+            idSP, tenSP, giaBan, soLuong, xuatSu, hang, mauSac, size, chatLieu, danhMuc, moTa
+        };
+    }
     public SanPham(String tenSP, double giaNhap, double giaBan, int soLuong, String xuatSu, String hang, String mauSac, String size, String moTa) {
         this.tenSP = tenSP;
         this.giaNhap = giaNhap;
