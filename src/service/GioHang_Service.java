@@ -15,9 +15,9 @@ import model.SanPham;
  */
 public class GioHang_Service {
 
-    public List<GioHang> gioHang = new ArrayList<>();
+    public ArrayList<GioHang> gioHang = new ArrayList<>();
 
-    public List<GioHang> getProduct(GioHang spSelected) {
+    public ArrayList<GioHang> getProduct(GioHang spSelected) {
         boolean check = false;
         try {
             if (gioHang.isEmpty()) {

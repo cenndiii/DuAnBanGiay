@@ -10,13 +10,13 @@ package model;
  */
 public class NhanVien {
 
-    private String ID, hoTen, email, matKhau,tinhTrang;
-    private int vaiTro;
+    private String hoTen, email, matKhau,tinhTrang;
+    private int vaiTro,ID;
 
     public NhanVien() {
     }
 
-    public NhanVien(String ID, String hoTen, String email, String matKhau, String tinhTrang, int vaiTro) {
+    public NhanVien(int ID, String hoTen, String email, String matKhau, String tinhTrang, int vaiTro) {
         this.ID = ID;
         this.hoTen = hoTen;
         this.email = email;
@@ -25,11 +25,11 @@ public class NhanVien {
         this.vaiTro = vaiTro;
     }
 
-    public String getID() {
+    public int getID() {
         return ID;
     }
 
-    public void setID(String ID) {
+    public void setID(int ID) {
         this.ID = ID;
     }
 
