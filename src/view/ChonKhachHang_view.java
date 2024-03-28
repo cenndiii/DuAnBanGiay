@@ -30,23 +30,21 @@ public class ChonKhachHang_view extends javax.swing.JFrame {
     public void fillTableGuest(List<KhachHang> list) {
         dtm = (DefaultTableModel) tblChooseGuest.getModel();
         dtm.setRowCount(0);
-        String ten = null;
+        String Ten = null;
         for (KhachHang kH : list) {
-            ten = kH.getTen();
+            Ten = kH.getTen();
             if (kH.getHo().isBlank() && !kH.getTenDem().isBlank()) {
-                ten = kH.getTenDem() + " " + kH.getTen();
+                Ten = kH.getTenDem() + " " + kH.getTen();
             } else if (kH.getTenDem().isBlank() && !kH.getHo().isBlank()) {
-                ten = kH.getHo() + " " + kH.getTen();
+                Ten = kH.getHo() + " " + kH.getTen();
             } else if (!kH.getTenDem().isBlank() && !kH.getHo().isBlank() && !kH.getTen().isBlank()) {
-                ten = kH.getHo() + " " + kH.getTenDem() + " " + kH.getTen();
+                Ten = kH.getHo() + " " + kH.getTenDem() + " " + kH.getTen();
             }
-            dtm.addRow(new Object[]{kH.getID(), ten, kH.getGioiTinh() == true ? "Nam" : "Nữ", kH.getNgaySinh(), kH.getMail(), kH.getSDT()});
+            dtm.addRow(new Object[]{kH.getID(), Ten, kH.getGioiTinh() == true ? "Nam" : "Nữ", kH.getNgaySinh(), kH.getMail(), kH.getSDT()});
         }
     }
 
-    public KhachHang getDataFromGuestChoose(){
-        return new KhachHang("", ten, "", "", true, "", "", sdt);
-    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -118,7 +116,7 @@ public class ChonKhachHang_view extends javax.swing.JFrame {
             ten = (String) tblChooseGuest.getValueAt(index, 1);
             sdt = (String) tblChooseGuest.getValueAt(index, 5);
             TrangChu tc = new TrangChu();
-            tc.showGuest(ten, sdt);
+//            tc.showGuest(ten, sdt);
             this.dispose();
         } catch (Exception e) {
         }

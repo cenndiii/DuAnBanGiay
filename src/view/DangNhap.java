@@ -4,7 +4,6 @@
  */
 package view;
 
-import java.awt.Label;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,7 +24,7 @@ public class DangNhap extends javax.swing.JFrame {
     }
 
     DangNhap_Service dn = new DangNhap_Service();
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -171,7 +170,7 @@ public class DangNhap extends javax.swing.JFrame {
         NhanVien nv = dn.login(txtTaiKhoan.getText());
         boolean check1 = false;
         boolean check2 = false;
-        
+
         if (txtTaiKhoan.getText().isBlank()) {
             Requied_Name.setText("* Không được để trống !");
             txtTaiKhoan.requestFocus();
