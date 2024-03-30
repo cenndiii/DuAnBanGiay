@@ -5,6 +5,7 @@
 package view;
 
 import java.util.List;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import model.KhachHang;
 import service.KhachHangService;
@@ -15,18 +16,29 @@ import service.KhachHangService;
  */
 public class ChonKhachHang_view extends javax.swing.JFrame {
 
+    private JTextField txtName;
+    private JTextField txtPhoneNumber;
+    private JTextField txtId;
+    
     DefaultTableModel dtm;
     KhachHangService khs = new KhachHangService();
     int index = -1;
-    public String ten,sdt;
+    public String ten, sdt;
     
-    public ChonKhachHang_view() {
+    public ChonKhachHang_view(JTextField txtName, JTextField txtPhoneNumber, JTextField txtIdKh) {
         initComponents();
+        this.txtId = txtIdKh;
+        this.txtName = txtName;
+        this.txtPhoneNumber = txtPhoneNumber;
         fillTableGuest(khs.getAllKhachHang());
         setLocationRelativeTo(null);
         setTitle("Chọn Khách Hàng");
     }
-
+    
+    private ChonKhachHang_view() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
     public void fillTableGuest(List<KhachHang> list) {
         dtm = (DefaultTableModel) tblChooseGuest.getModel();
         dtm.setRowCount(0);
@@ -43,7 +55,6 @@ public class ChonKhachHang_view extends javax.swing.JFrame {
             dtm.addRow(new Object[]{kH.getID(), Ten, kH.getGioiTinh() == true ? "Nam" : "Nữ", kH.getNgaySinh(), kH.getMail(), kH.getSDT()});
         }
     }
-
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -112,13 +123,17 @@ public class ChonKhachHang_view extends javax.swing.JFrame {
     }//GEN-LAST:event_tblChooseGuestMouseClicked
 
     private void btnChooseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChooseActionPerformed
-        try {           
+        try {
+            int idkh;
+            idkh = (int) tblChooseGuest.getValueAt(index, 0);
             ten = (String) tblChooseGuest.getValueAt(index, 1);
             sdt = (String) tblChooseGuest.getValueAt(index, 5);
-            TrangChu tc = new TrangChu();
-//            tc.showGuest(ten, sdt);
+            this.txtName.setText(ten);
+            this.txtPhoneNumber.setText(sdt);
+            this.txtId.setText(String.valueOf(idkh));
             this.dispose();
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }//GEN-LAST:event_btnChooseActionPerformed
 
@@ -150,10 +165,8 @@ public class ChonKhachHang_view extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ChonKhachHang_view().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new ChonKhachHang_view().setVisible(true);
         });
     }
 

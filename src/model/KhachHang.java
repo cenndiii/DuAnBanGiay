@@ -9,7 +9,7 @@ package model;
  * @author dinhq
  */
 public class KhachHang {
-    private String ID;
+    private int ID;
     private String Ten;
     private String TenDem;
     private String ho;
@@ -23,7 +23,7 @@ public class KhachHang {
     public KhachHang() {
     }
 
-    public KhachHang(String ID, String Ten, String TenDem, String ho, Boolean gioiTinh, String ngaySinh, String mail, String SDT) {
+    public KhachHang(int ID, String Ten, String TenDem, String ho, Boolean gioiTinh, String ngaySinh, String mail, String SDT) {
         this.ID = ID;
         this.Ten = Ten;
         this.TenDem = TenDem;
@@ -34,11 +34,11 @@ public class KhachHang {
         this.SDT = SDT;
     }
 
-    public String getID() {
+    public int getID() {
         return ID;
     }
 
-    public void setID(String ID) {
+    public void setID(int ID) {
         this.ID = ID;
     }
 

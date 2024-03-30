@@ -43,7 +43,7 @@ public class KhachHangService {
                 FROM [dbo].[KhachHang]""");
             while (rs.next()) {
                 KhachHang kh = new KhachHang(
-                        rs.getString(1),
+                        rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
@@ -118,12 +118,12 @@ public class KhachHangService {
         return check > 0;
     }
 
-    public boolean delete(String id) {
+    public boolean delete(int id) {
         int check = 0;
         try (PreparedStatement PS = db.openConnection().prepareStatement("""
                                                                          DELETE FROM [dbo].[KhachHang]
                                                                                WHERE ID = ?""")) {
-            PS.setString(1, id);
+            PS.setInt(1, id);
             check = PS.executeUpdate();
 
         } catch (Exception e) {
@@ -152,7 +152,7 @@ public class KhachHangService {
             List<KhachHang> lists = new ArrayList<>();
             while (rs.next()) {
                 KhachHang kh = new KhachHang();
-                kh.setID(rs.getString(1));
+                kh.setID(rs.getInt(1));
                 kh.setTen(rs.getString(2));
                 kh.setTenDem(rs.getString(3));
                 kh.setHo(rs.getString(4));
