@@ -64,8 +64,7 @@ public class HoaDonCho_Service {
                 row = PS.executeUpdate();
                 return row;
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
             return null;
         }
     }
@@ -79,24 +78,28 @@ public class HoaDonCho_Service {
                 row = PS.executeUpdate();
                 return row;
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
             return null;
         }
     }
 
-    public Integer Pay(double tongTien, int id) {
+    public Integer Pay(double tongTien, int idHd, String idKh) {
         Integer row = null;
 
         try {
-            try (PreparedStatement PS = db.openConnection().prepareStatement("update HoaDon set Tinh_trang = N'Đã Thanh Toán', Ngay_thanh_toan = GETDATE(), Tong_tien = ? where Id = ?");) {
-                PS.setDouble(1, tongTien);
-                PS.setInt(2, id);
+
+            try (PreparedStatement PS = db.openConnection().prepareStatement("update HoaDon set Tinh_trang = N'Đã Thanh Toán', Ngay_thanh_toan = GETDATE(),IdKH = ?, Tong_tien = ? where Id = ?");) {
+                if (idKh.isBlank()) {
+                    PS.setNull(1, java.sql.Types.INTEGER);
+                } else {
+                    PS.setInt(1, Integer.parseInt(idKh));
+                }
+                PS.setDouble(2, tongTien);
+                PS.setInt(3, idHd);
                 row = PS.executeUpdate();
                 return row;
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
             return null;
         }
     }
