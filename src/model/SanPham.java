@@ -45,7 +45,7 @@ public class SanPham {
         this.moTa = moTa;
     }
 
-    public SanPham(int idSP, String tenSP, double giaNhap, double giaBan, int soLuong, String xuatSu, String hang, String mauSac, String size, String moTa) {
+    public SanPham(int idSP, String tenSP, double giaNhap, double giaBan, int soLuong, String xuatSu, String hang, String mauSac, String size, String chatLieu, String danhMuc, String moTa) {
         this.idSP = idSP;
         this.tenSP = tenSP;
         this.giaNhap = giaNhap;
@@ -55,13 +55,14 @@ public class SanPham {
         this.hang = hang;
         this.mauSac = mauSac;
         this.size = size;
+        this.chatLieu = chatLieu;
+        this.danhMuc = danhMuc;
         this.moTa = moTa;
     }
 
-    public SanPham(int idSP, String tenSP, double giaNhap, double giaBan, int soLuong, String xuatSu, String hang, String mauSac, String size, String chatLieu, String danhMuc, String moTa) {
+    public SanPham(int idSP, String tenSP, double giaBan, int soLuong, String xuatSu, String hang, String mauSac, String size, String chatLieu, String danhMuc, String moTa) {
         this.idSP = idSP;
         this.tenSP = tenSP;
-        this.giaNhap = giaNhap;
         this.giaBan = giaBan;
         this.soLuong = soLuong;
         this.xuatSu = xuatSu;

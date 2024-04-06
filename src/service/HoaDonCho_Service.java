@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.GioHang;
 import model.HoaDonCho;
 import untils.DBConnect;
 
@@ -20,10 +21,14 @@ public class HoaDonCho_Service {
 
     List<HoaDonCho> list;
     Connection con = null;
-    PreparedStatement ps = null;
-    ResultSet rs = null;
+//    PreparedStatement ps = null;
+//    ResultSet rs = null;
     String sql = null;
     DBConnect db = new DBConnect();
+
+//    public List<HoaDonCho> hdDaTt = new ArrayList<>();
+//    public List<HoaDonCho> hdHuy = new ArrayList<>();
+//    public List<HoaDonCho> listAll = new ArrayList<>();
 
     public List<HoaDonCho> getAll() throws SQLException, SQLException {
 
@@ -36,8 +41,8 @@ public class HoaDonCho_Service {
                             where Tinh_trang like 'Ch%'
               """;
         try {
-            ps = con.prepareStatement(sql);
-            rs = ps.executeQuery();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
                 HoaDonCho hdc = new HoaDonCho(rs.getInt(1), rs.getString(2),
@@ -53,11 +58,34 @@ public class HoaDonCho_Service {
         }
     }
 
+//    public void getDetailBill() {
+//        try (Statement st = con.createStatement(); ResultSet rs = st.executeQuery("select * from HoaDon")) {
+//            while (rs.next()) {
+//                if (rs.getString("Tinh_trang").equalsIgnoreCase("Đã Thanh Toán")) {
+//                    HoaDonCho hdc = new HoaDonCho(rs.getInt(1), rs.getString(2),
+//                            rs.getString(3),
+//                            rs.getString(4),
+//                            rs.getString(5));
+//                    hdDaTt.add(hdc);
+//                    listAll.add(hdc);
+//                } else if (rs.getString("Tinh_trang").equalsIgnoreCase("Hủy")) {
+//                    HoaDonCho hdc = new HoaDonCho(rs.getInt(1), rs.getString(2),
+//                            rs.getString(3),
+//                            rs.getString(4),
+//                            rs.getString(5));
+//                    hdHuy.add(hdc);
+//                    listAll.add(hdc);
+//                }
+//            }
+//        } catch (Exception e) {
+//        }
+//    }
+
     public Integer insert(HoaDonCho x) {
         Integer row = null;
 
         try {
-            try (PreparedStatement PS = db.openConnection().prepareStatement("insert into HoaDon(Ma,Ngay_tao,IdNV,Tinh_trang) values(?,getDate(),?,?)");) {
+            try (PreparedStatement PS = db.openConnection().prepareStatement("insert into HoaDon(Ma,Ngay_tao,IdNV,Tinh_trang) values(?, GETDATE(),?,?)");) {
                 PS.setObject(1, x.getMaHDC());
                 PS.setObject(2, x.getIdNv());
                 PS.setString(3, "Chưa thanh toán");
@@ -83,24 +111,30 @@ public class HoaDonCho_Service {
         }
     }
 
-    public Integer Pay(double tongTien, int idHd, String idKh) {
-        Integer row = null;
-
+    public void Pay(double tongTien, int idHd, String idKh, List<GioHang> listGH) {
         try {
-
-            try (PreparedStatement PS = db.openConnection().prepareStatement("update HoaDon set Tinh_trang = N'Đã Thanh Toán', Ngay_thanh_toan = GETDATE(),IdKH = ?, Tong_tien = ? where Id = ?");) {
-                if (idKh.isBlank()) {
-                    PS.setNull(1, java.sql.Types.INTEGER);
-                } else {
-                    PS.setInt(1, Integer.parseInt(idKh));
-                }
-                PS.setDouble(2, tongTien);
-                PS.setInt(3, idHd);
-                row = PS.executeUpdate();
-                return row;
+            // cap nhat hoa don cho
+            PreparedStatement PS = db.openConnection().prepareStatement("update HoaDon set Tinh_trang = N'Đã Thanh Toán', Ngay_thanh_toan = GETDATE(),IdKH = ?, Tong_tien = ? where Id = ?");
+            if (idKh.isBlank()) {
+                PS.setNull(1, java.sql.Types.INTEGER);
+            } else {
+                PS.setInt(1, Integer.parseInt(idKh));
             }
-        } catch (SQLException e) {
-            return null;
+            PS.setDouble(2, tongTien);
+            PS.setInt(3, idHd);
+            PS.executeUpdate();
+
+            // insert hdct
+            for (GioHang gioHang : listGH) {
+                PS = db.openConnection().prepareStatement("insert into HoaDonChiTiet values (?,?,?,?)");
+                PS.setInt(1, idHd);
+                PS.setInt(2, gioHang.getIdSP());
+                PS.setInt(3, gioHang.getSoLuong());
+                PS.setDouble(4, gioHang.getGia());
+                PS.executeUpdate();
+            }
+
+        } catch (Exception e) {
         }
     }
 

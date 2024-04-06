@@ -119,6 +119,7 @@ public class SanPham_Service {
             row = PS.executeUpdate();
             return row;
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }
