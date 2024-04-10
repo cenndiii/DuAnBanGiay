@@ -10,19 +10,47 @@ package model;
  */
 public class NhanVien {
 
-    private String hoTen, email, matKhau,tinhTrang;
-    private int vaiTro,ID;
+    private int ID;
+    private String ten;
+    private String tenDem;
+    private String ho;
+    private String ngaySinh;
+    private Boolean gioiTinh;
+    private String sdt;
+    private int vaiTro;
+    private String email;
+    private String taiKhoan;
+    private String matKhau;
+    private Boolean trangThai;
 
+    public Object[] toDataROw(){
+        String gt = "";
+        if (gioiTinh) {
+            gt = "Nam";
+        }else if (!gioiTinh) {
+            gt = "Nữ";
+        }
+        return new Object[]{
+            ID,ten,tenDem,ho,email,gt,sdt,taiKhoan,matKhau,ngaySinh,trangThai== true ? "Đang làm" : "Nghỉ Làm",vaiTro
+        };
+    }
+    
     public NhanVien() {
     }
 
-    public NhanVien(int ID, String hoTen, String email, String matKhau, String tinhTrang, int vaiTro) {
+    public NhanVien(int ID, String ten, String tenDem, String ho, String ngaySinh, Boolean gioiTinh, String sdt, int vaiTro, String email, String taiKhoan, String matKhau, Boolean trangThai) {
         this.ID = ID;
-        this.hoTen = hoTen;
-        this.email = email;
-        this.matKhau = matKhau;
-        this.tinhTrang = tinhTrang;
+        this.ten = ten;
+        this.tenDem = tenDem;
+        this.ho = ho;
+        this.ngaySinh = ngaySinh;
+        this.gioiTinh = gioiTinh;
+        this.sdt = sdt;
         this.vaiTro = vaiTro;
+        this.email = email;
+        this.taiKhoan = taiKhoan;
+        this.matKhau = matKhau;
+        this.trangThai = trangThai;
     }
 
     public int getID() {
@@ -33,12 +61,60 @@ public class NhanVien {
         this.ID = ID;
     }
 
-    public String getHoTen() {
-        return hoTen;
+    public String getTen() {
+        return ten;
     }
 
-    public void setHoTen(String hoTen) {
-        this.hoTen = hoTen;
+    public void setTen(String ten) {
+        this.ten = ten;
+    }
+
+    public String getTenDem() {
+        return tenDem;
+    }
+
+    public void setTenDem(String tenDem) {
+        this.tenDem = tenDem;
+    }
+
+    public String getHo() {
+        return ho;
+    }
+
+    public void setHo(String ho) {
+        this.ho = ho;
+    }
+
+    public String getNgaySinh() {
+        return ngaySinh;
+    }
+
+    public void setNgaySinh(String ngaySinh) {
+        this.ngaySinh = ngaySinh;
+    }
+
+    public Boolean getGioiTinh() {
+        return gioiTinh;
+    }
+
+    public void setGioiTinh(Boolean gioiTinh) {
+        this.gioiTinh = gioiTinh;
+    }
+
+    public String getSdt() {
+        return sdt;
+    }
+
+    public void setSdt(String sdt) {
+        this.sdt = sdt;
+    }
+
+    public int getVaiTro() {
+        return vaiTro;
+    }
+
+    public void setVaiTro(int vaiTro) {
+        this.vaiTro = vaiTro;
     }
 
     public String getEmail() {
@@ -49,6 +125,14 @@ public class NhanVien {
         this.email = email;
     }
 
+    public String getTaiKhoan() {
+        return taiKhoan;
+    }
+
+    public void setTaiKhoan(String taiKhoan) {
+        this.taiKhoan = taiKhoan;
+    }
+
     public String getMatKhau() {
         return matKhau;
     }
@@ -57,19 +141,11 @@ public class NhanVien {
         this.matKhau = matKhau;
     }
 
-    public String getTinhTrang() {
-        return tinhTrang;
+    public Boolean getTrangThai() {
+        return trangThai;
     }
 
-    public void setTinhTrang(String tinhTrang) {
-        this.tinhTrang = tinhTrang;
-    }
-
-    public int getVaiTro() {
-        return vaiTro;
-    }
-
-    public void setVaiTro(int vaiTro) {
-        this.vaiTro = vaiTro;
+    public void setTrangThai(Boolean trangThai) {
+        this.trangThai = trangThai;
     }
 }

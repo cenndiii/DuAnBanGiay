@@ -7,6 +7,8 @@ package service;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.SanPham;
 import untils.DBConnect;
 
@@ -16,19 +18,22 @@ import untils.DBConnect;
  */
 public class SanPham_Service {
 
-    List<SanPham> list;
     Connection con = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
     String sql = null;
     DBConnect db = new DBConnect();
+    public List<SanPham> listSpHD = new ArrayList<>();
+    public List<SanPham> listSpCHD = new ArrayList<>();
+    public List<SanPham> listAllSp = new ArrayList<>();
 
-    public List<SanPham> getAll() throws SQLException, SQLException {
-
-        list = new ArrayList<>();
+    public void getAll() throws SQLException, SQLException {
+        listSpHD.clear();
+        listAllSp.clear();
+        listSpCHD.clear();
         con = db.openConnection();
         sql = """
-              select sp.Id, sp.Ten, sp.So_tuong_ton, sp.Gia_nhap, Sp.Gia_ban, sp.Mo_ta, n.Chi_Tiet,m.Chi_Tiet,dmsp.Chi_Tiet,sz.Chi_Tiet,cl.Chi_Tiet,th.Chi_Tiet,sp.IdKM from SanPham sp
+              select sp.Id, sp.Ten, sp.So_tuong_ton, sp.Gia_nhap, Sp.Gia_ban, sp.Mo_ta, n.Chi_Tiet,m.Chi_Tiet,dmsp.Chi_Tiet,sz.Chi_Tiet,cl.Chi_Tiet,th.Chi_Tiet,sp.IdKM, sp.Trang_thai from SanPham sp
                                                         join NSX n on sp.IdNsx = n.Id
                                                         join ThuongHieu th on th.Id = sp.IdTH
                                                         join MauSac m on m.Id = sp.IdMauSac
@@ -41,33 +46,54 @@ public class SanPham_Service {
             rs = ps.executeQuery();
 
             while (rs.next()) {
-                SanPham sp = new SanPham(
-                        rs.getInt("Id"),
-                        rs.getString("Ten"),
-                        rs.getDouble("Gia_nhap"),
-                        rs.getDouble("Gia_ban"),
-                        rs.getInt("So_tuong_ton"),
-                        rs.getString(7),
-                        rs.getString(12),
-                        rs.getString(8),
-                        rs.getString(10),
-                        rs.getString(11),
-                        rs.getString(9),
-                        rs.getString(6));
+                if (rs.getBoolean(14)) {
+                    SanPham sp = new SanPham(
+                            rs.getInt("Id"),
+                            rs.getString("Ten"),
+                            rs.getDouble("Gia_nhap"),
+                            rs.getDouble("Gia_ban"),
+                            rs.getInt("So_tuong_ton"),
+                            rs.getString(7),
+                            rs.getString(12),
+                            rs.getString(8),
+                            rs.getString(10),
+                            rs.getString(11),
+                            rs.getString(9),
+                            rs.getString(6),
+                            rs.getInt(13),
+                            rs.getBoolean(14));
+                    listSpHD.add(sp);
+                    listAllSp.add(sp);
+                } else {
+                    SanPham sp = new SanPham(
+                            rs.getInt("Id"),
+                            rs.getString("Ten"),
+                            rs.getDouble("Gia_nhap"),
+                            rs.getDouble("Gia_ban"),
+                            rs.getInt("So_tuong_ton"),
+                            rs.getString(7),
+                            rs.getString(12),
+                            rs.getString(8),
+                            rs.getString(10),
+                            rs.getString(11),
+                            rs.getString(9),
+                            rs.getString(6),
+                            rs.getInt(13),
+                            rs.getBoolean(14));
+                    listSpCHD.add(sp);
+                    listAllSp.add(sp);
+                }
 
-                list.add(sp);
             }
-            return list;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
     }
 
     public Integer insert(SanPham x) {
         Integer row = null;
         try {
-            try (PreparedStatement PS = db.openConnection().prepareStatement("insert into SanPham(Ten,Gia_nhap,Gia_ban,So_tuong_ton,IdNsx,IdTH,IdMauSac,IdKC,Mo_ta,IdCL,IdDMuc) values(?,?,?,?,?,?,?,?,?,?,?)");) {
+            try (PreparedStatement PS = db.openConnection().prepareStatement("insert into SanPham(Ten,Gia_nhap,Gia_ban,So_tuong_ton,IdNsx,IdTH,IdMauSac,IdKC,Mo_ta,IdCL,IdDMuc,Trang_thai) values(?,?,?,?,?,?,?,?,?,?,?,?)");) {
                 PS.setObject(1, x.getTenSP());
                 PS.setObject(2, x.getGiaNhap());
                 PS.setObject(3, x.getGiaBan());
@@ -79,6 +105,7 @@ public class SanPham_Service {
                 PS.setObject(9, x.getMoTa());
                 PS.setObject(10, x.getChatLieu());
                 PS.setObject(11, x.getDanhMuc());
+                PS.setBoolean(12, x.getTrangThai());
                 row = PS.executeUpdate();
                 return row;
             }
@@ -91,7 +118,7 @@ public class SanPham_Service {
     public Integer update(SanPham x) {
         Integer row = null;
         try {
-            try (PreparedStatement PS = db.openConnection().prepareStatement("update SanPham set Ten= ?, So_tuong_ton = ?, Gia_nhap = ? ,Gia_ban = ? ,Mo_ta = ? , IdNsx =? ,IdMauSac = ? ,IdDMuc = ?,IdKC = ?, IdCL = ?, IdTH = ?, IdKM = null where Id = ?")) {
+            try (PreparedStatement PS = db.openConnection().prepareStatement("update SanPham set Ten= ?, So_tuong_ton = ?, Gia_nhap = ? ,Gia_ban = ? ,Mo_ta = ? , IdNsx =? ,IdMauSac = ? ,IdDMuc = ?,IdKC = ?, IdCL = ?, IdTH = ?, IdKM = null,Trang_thai = ? where Id = ?")) {
                 PS.setObject(1, x.getTenSP());
                 PS.setObject(2, x.getSoLuong());
                 PS.setObject(3, x.getGiaNhap());
@@ -103,7 +130,8 @@ public class SanPham_Service {
                 PS.setObject(9, x.getSize());
                 PS.setObject(10, x.getChatLieu());
                 PS.setObject(11, x.getHang());
-                PS.setObject(12, x.getIdSP());
+                PS.setBoolean(12, x.getTrangThai());
+                PS.setObject(13, x.getIdSP());
                 row = PS.executeUpdate();
                 return row;
             }
@@ -114,7 +142,7 @@ public class SanPham_Service {
 
     public Integer delete(int id) {
         Integer row = null;
-        try (PreparedStatement PS = db.openConnection().prepareStatement("delete from SanPham where Id = ?")) {
+        try (PreparedStatement PS = db.openConnection().prepareStatement("update SanPham set Trang_thai = 0 where Id = ?")) {
             PS.setInt(1, id);
             row = PS.executeUpdate();
             return row;

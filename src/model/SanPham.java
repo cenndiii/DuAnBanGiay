@@ -21,10 +21,12 @@ public class SanPham {
     private String mauSac;
     private String size, chatLieu, danhMuc;
     private String moTa;
+    private boolean trangThai;
+    private int idKm;
 
     public Object[] toDataRow() {
         return new Object[]{
-            idSP, tenSP, giaNhap, giaBan, soLuong, xuatSu, hang, mauSac, size, chatLieu, danhMuc, moTa
+            idSP, tenSP, giaNhap, giaBan, soLuong, xuatSu, hang, mauSac, size, chatLieu, danhMuc, moTa, trangThai ? "Đang Hoạt Động" : "Chưa Hoạt Động"
         };
     }
 
@@ -33,6 +35,13 @@ public class SanPham {
             idSP, tenSP, giaBan, soLuong, xuatSu, hang, mauSac, size, chatLieu, danhMuc, moTa
         };
     }
+
+    public Object[] toDataKmSanPhamRow() {
+        return new Object[]{
+            idSP, tenSP, idKm==0 ? "Không có": idKm,false
+        };
+    }
+
     public SanPham(String tenSP, double giaNhap, double giaBan, int soLuong, String xuatSu, String hang, String mauSac, String size, String moTa) {
         this.tenSP = tenSP;
         this.giaNhap = giaNhap;
@@ -45,7 +54,7 @@ public class SanPham {
         this.moTa = moTa;
     }
 
-    public SanPham(int idSP, String tenSP, double giaNhap, double giaBan, int soLuong, String xuatSu, String hang, String mauSac, String size, String chatLieu, String danhMuc, String moTa) {
+    public SanPham(int idSP, String tenSP, double giaNhap, double giaBan, int soLuong, String xuatSu, String hang, String mauSac, String size, String chatLieu, String danhMuc, String moTa, int idKm, boolean trangThai) {
         this.idSP = idSP;
         this.tenSP = tenSP;
         this.giaNhap = giaNhap;
@@ -58,6 +67,8 @@ public class SanPham {
         this.chatLieu = chatLieu;
         this.danhMuc = danhMuc;
         this.moTa = moTa;
+        this.idKm = idKm;
+        this.trangThai = trangThai;
     }
 
     public SanPham(int idSP, String tenSP, double giaBan, int soLuong, String xuatSu, String hang, String mauSac, String size, String chatLieu, String danhMuc, String moTa) {
@@ -73,7 +84,7 @@ public class SanPham {
         this.danhMuc = danhMuc;
         this.moTa = moTa;
     }
- 
+
     public SanPham() {
     }
 
@@ -171,6 +182,30 @@ public class SanPham {
 
     public void setMoTa(String moTa) {
         this.moTa = moTa;
+    }
+
+    public Boolean getTrangThai() {
+        return trangThai;
+    }
+
+    public void setTrangThai(Boolean trangThai) {
+        this.trangThai = trangThai;
+    }
+
+    public boolean isTrangThai() {
+        return trangThai;
+    }
+
+    public void setTrangThai(boolean trangThai) {
+        this.trangThai = trangThai;
+    }
+
+    public int getIdKm() {
+        return idKm;
+    }
+
+    public void setIdKm(int idKm) {
+        this.idKm = idKm;
     }
 
 }

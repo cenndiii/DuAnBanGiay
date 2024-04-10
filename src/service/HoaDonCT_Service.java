@@ -96,26 +96,16 @@ public class HoaDonCT_Service {
                 }
             }
             case 1 -> {
-                if (hdct.getNgayTao().contains(search)) {
-                    listSearch.add(hdct);
-                }
-            }
-            case 2 -> {
-                if (hdct.getNgayThanhToan().contains(search)) {
-                    listSearch.add(hdct);
-                }
-            }
-            case 3 -> {
                 if (hdct.getIdKh() == Integer.parseInt(search)) {
                     listSearch.add(hdct);
                 }
             }
-            case 4 -> {
+            case 2 -> {
                 if (hdct.getIdNV() == Integer.parseInt(search)) {
                     listSearch.add(hdct);
                 }
             }
-            case 5 -> {
+            case 3 -> {
                 if (hdct.getTrangThai().contains(search)) {
                     listSearch.add(hdct);
                 }
@@ -126,12 +116,12 @@ public class HoaDonCT_Service {
         return listSearch;
     }
 
-    public List<HoaDonChiTiet> search(java.util.Date f, java.util.Date l, String search, int key) throws ParseException {
+    public List<HoaDonChiTiet> search(java.util.Date f, java.util.Date l, String search, int key, int keyDayType) throws ParseException {
         listSearch.clear();
 
         try {
-            switch (key) {
-                case 1 -> {
+            switch (keyDayType) {
+                case 0 -> {
                     for (HoaDonChiTiet hdct : listAll) {
                         if (f != null && l == null) {
                             // tim trước ngày cần tìm tới ngày cần tìm
@@ -165,35 +155,38 @@ public class HoaDonCT_Service {
                         }
                     }
                 }
-                case 2 -> {
+                case 1 -> {
                     for (HoaDonChiTiet hdct : listAll) {
-                        if (f != null) {
-                            // tim trước ngày cần tìm tới ngày cần tìm
-                            if (sdf.parse(hdct.getNgayThanhToan()).after(f)) {
-                                if (search.isBlank()) {
-                                    listSearch.add(hdct);
-                                } else {
-                                    CbxIndex(key, hdct, search);
-                                }
-                            }
 
-                        } else if (l != null) {
-                            // tim từ ngày tìm tới hôm nay
-                            if (sdf.parse(hdct.getNgayThanhToan()).before(l)) {
-                                if (search.isBlank()) {
-                                    listSearch.add(hdct);
-                                } else {
-                                    CbxIndex(key, hdct, search);
+                        if (!hdct.getNgayThanhToan().contains("null")) {
+                            if (f != null && l == null) {
+                                // tim trước ngày cần tìm tới ngày cần tìm
+                                if (sdf.parse(hdct.getNgayThanhToan()).after(f)) {
+                                    if (search.isBlank()) {
+                                        listSearch.add(hdct);
+                                    } else {
+                                        CbxIndex(key, hdct, search);
+                                    }
                                 }
-                            }
-                        } else if (f != null && l != null) {
-                            // nếu không cái nào null
-                            if (sdf.parse(hdct.getNgayThanhToan()).before(l) && sdf.parse(hdct.getNgayThanhToan()).after(f)) {
-                                if (search.isBlank()) {
-                                    // nếu ô tìm kiếm trống -> tìm theo ngày
-                                    listSearch.add(hdct);
-                                } else {
-                                    CbxIndex(key, hdct, search);
+
+                            } else if (l != null && f == null) {
+                                // tim từ ngày tìm tới hôm nay
+                                if (sdf.parse(hdct.getNgayThanhToan()).before(l)) {
+                                    if (search.isBlank()) {
+                                        listSearch.add(hdct);
+                                    } else {
+                                        CbxIndex(key, hdct, search);
+                                    }
+                                }
+                            } else if (f != null && l != null) {
+                                // nếu không cái nào null
+                                if (sdf.parse(hdct.getNgayThanhToan()).before(l) && sdf.parse(hdct.getNgayThanhToan()).after(f)) {
+                                    if (search.isBlank()) {
+                                        // nếu ô tìm kiếm trống -> tìm theo ngày
+                                        listSearch.add(hdct);
+                                    } else {
+                                        CbxIndex(key, hdct, search);
+                                    }
                                 }
                             }
                         }
