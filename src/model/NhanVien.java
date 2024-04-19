@@ -23,18 +23,33 @@ public class NhanVien {
     private String matKhau;
     private Boolean trangThai;
 
-    public Object[] toDataROw(){
+    public Object[] toDataROw() {
         String gt = "";
         if (gioiTinh) {
             gt = "Nam";
-        }else if (!gioiTinh) {
+        } else if (!gioiTinh) {
             gt = "Nữ";
         }
+        String vt = "";
+        if (vaiTro == 0) {
+            vt = "Nhân viên";
+        } else if (vaiTro == 1) {
+            vt = "Admin";
+        }
+
+        if (ho.isBlank() && !tenDem.isBlank()) {
+            ten = tenDem + " " + ten;
+        } else if (tenDem.isBlank() && !ho.isBlank()) {
+            ten = ho + " " + ten;
+        } else if (!tenDem.isBlank() && !ho.isBlank() && !ten.isBlank()) {
+            ten = ho + " " + tenDem + " " + ten;
+        }
         return new Object[]{
-            ID,ten,tenDem,ho,email,gt,sdt,taiKhoan,matKhau,ngaySinh,trangThai== true ? "Đang làm" : "Nghỉ Làm",vaiTro
+            ID, ten, email, gt, sdt, taiKhoan, matKhau, ngaySinh, trangThai == true ? "Đang làm" : "Nghỉ Làm", vt
         };
+
     }
-    
+
     public NhanVien() {
     }
 

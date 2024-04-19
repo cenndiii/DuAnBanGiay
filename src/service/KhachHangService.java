@@ -18,45 +18,64 @@ import untils.DBConnect;
  */
 public class KhachHangService {
 
-    List<KhachHang> list;
-    Connection con = null;
-    PreparedStatement ps = null;
-//    ResultSet rs = null;
-//    String sql = null;
+//    Connection con = null;
+//    PreparedStatement ps = null;
     DBConnect db = new DBConnect();
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    public List<KhachHang> getAllKhachHang() {
+//    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    public List<KhachHang> listSearchKH = new ArrayList<>();
+    public List<KhachHang> listAllKH = new ArrayList<>();
+    public List<KhachHang> listKHOn = new ArrayList<>();
+    public List<KhachHang> listKHOff = new ArrayList<>();
 
-        list = new ArrayList<>();
-
+    public void getAllKhachHang() {
+        listAllKH.clear();
+        listKHOn.clear();
+        listKHOff.clear();
         try {
             Statement st = db.openConnection().createStatement();
             ResultSet rs = st.executeQuery("""
-                SELECT [Id]
-                    ,[Ten]
-                    ,[Ten_dem]
-                    ,[Ho]
-                    ,[Gioi_tinh]
-                    ,[Ngay_Sinh]
-                    ,[Email]
-                    ,[Sdt]
-                FROM [dbo].[KhachHang]""");
+                SELECT TOP (1000) [Id]
+                      ,[Ten]
+                      ,[Ten_dem]
+                      ,[Ho]
+                      ,[Gioi_tinh]
+                      ,[Ngay_Sinh]
+                      ,[Email]
+                      ,[Sdt]
+                      ,[Trang_thai]
+                  FROM [DuAn1_FourShoes].[dbo].[KhachHang]""");
             while (rs.next()) {
-                KhachHang kh = new KhachHang(
-                        rs.getInt(1),
-                        rs.getString(2),
-                        rs.getString(3),
-                        rs.getString(4),
-                        rs.getBoolean(5),
-                        rs.getString(6),
-                        rs.getString(7),
-                        rs.getString(8));
-                list.add(kh);
+                if (rs.getBoolean(9)) {
+                    KhachHang kh = new KhachHang(
+                            rs.getInt(1),
+                            rs.getString(2),
+                            rs.getString(3),
+                            rs.getString(4),
+                            rs.getBoolean(5),
+                            rs.getString(6),
+                            rs.getString(7),
+                            rs.getString(8),
+                            rs.getBoolean(9));
+                    listKHOn.add(kh);
+                    listAllKH.add(kh);
+                } else {
+                    KhachHang kh = new KhachHang(
+                            rs.getInt(1),
+                            rs.getString(2),
+                            rs.getString(3),
+                            rs.getString(4),
+                            rs.getBoolean(5),
+                            rs.getString(6),
+                            rs.getString(7),
+                            rs.getString(8),
+                            rs.getBoolean(9));
+                    listKHOff.add(kh);
+                    listAllKH.add(kh);
+                }
+
             }
-            return list;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
     }
 
@@ -69,9 +88,10 @@ public class KhachHangService {
                                           ,[Gioi_tinh]
                                           ,[Ngay_Sinh]
                                           ,[Email]
-                                          ,[Sdt])
+                                          ,[Sdt]
+                                          ,[Trang_thai])
                                     VALUES
-                                (?,?,?,?,?,?,?)
+                                (?,?,?,?,?,?,?,?)
                      """;
         int check = 0;
         try (PreparedStatement PS = db.openConnection().prepareStatement(sql)) {
@@ -82,6 +102,7 @@ public class KhachHangService {
             PS.setString(5, kh.getNgaySinh());
             PS.setObject(6, kh.getMail());
             PS.setObject(7, kh.getSDT());
+            PS.setObject(8, kh.isTrangThai());
             check = PS.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace(System.out);
@@ -99,6 +120,7 @@ public class KhachHangService {
                              ,[Ngay_Sinh] = ?
                              ,[Email] = ?
                              ,[Sdt] = ?
+                             ,[Trang_thai] = ?
                         WHERE Id = ?
                      """;
         int check = 0;
@@ -110,7 +132,8 @@ public class KhachHangService {
             PS.setString(5, kh.getNgaySinh());
             PS.setObject(6, kh.getMail());
             PS.setObject(7, kh.getSDT());
-            PS.setObject(8, kh.getID());
+            PS.setObject(9, kh.getID());
+            PS.setObject(8, kh.isTrangThai());
             check = PS.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -133,47 +156,65 @@ public class KhachHangService {
         return check > 0;
     }
 
-    public List<KhachHang> timKiemKhachHang(String id, String ten) {
-        String sql = """
-                    SELECT [Id]
-                            ,[Ten]
-                            ,[Ten_dem]
-                            ,[Ho]
-                            ,[Gioi_tinh]
-                            ,[Ngay_Sinh]
-                            ,[Email]
-                            ,[Sdt]
-                    FROM [dbo].[KhachHang] where ID = ? or Ten = ?
-                     """;
-        try (PreparedStatement PS = db.openConnection().prepareStatement(sql)) {
-            PS.setObject(1, id);
-            PS.setObject(2, ten);
-            ResultSet rs = PS.executeQuery();
-            List<KhachHang> lists = new ArrayList<>();
-            while (rs.next()) {
-                KhachHang kh = new KhachHang();
-                kh.setID(rs.getInt(1));
-                kh.setTen(rs.getString(2));
-                kh.setTenDem(rs.getString(3));
-                kh.setHo(rs.getString(4));
-                kh.setGioiTinh(rs.getBoolean(5));
-                kh.setNgaySinh(rs.getString(6));
-                kh.setMail(rs.getString(7));
-                kh.setSDT(rs.getString(8));
-                lists.add(kh);
+
+    public List<KhachHang> cbxIndex(int key, KhachHang nv, String search) {
+        switch (key) {
+            case 0 -> {
+                if (String.valueOf(nv.getID()).contains(search)) {
+                    listSearchKH.add(nv);
+                }
             }
-            return lists;
-        } catch (Exception e) {
-            e.printStackTrace();
+            case 1 -> {
+                String ten = nv.getTen();
+                if (nv.getHo().isBlank() && !nv.getTenDem().isBlank()) {
+                    ten = nv.getTenDem() + " " + nv.getTen();
+                } else if (nv.getTenDem().isBlank() && !nv.getHo().isBlank()) {
+                    ten = nv.getHo() + " " + nv.getTen();
+                } else if (!nv.getTenDem().isBlank() && !nv.getHo().isBlank() && !nv.getTen().isBlank()) {
+                    ten = nv.getHo() + " " + nv.getTenDem() + " " + nv.getTen();
+                }
+                if (ten.contains(search)) {
+                    listSearchKH.add(nv);
+                }
+            }
+            case 2 -> {
+                String gioiTinh = "Nam";
+                if (!nv.getGioiTinh()) {
+                    gioiTinh = "Nữ";
+                } 
+                if (gioiTinh.contains(search)) {
+                    listSearchKH.add(nv);
+                }
+            }
+            case 3 -> {
+                if (nv.getNgaySinh().contains(search)) {
+                    listSearchKH.add(nv);
+                }
+            }
+            case 4 -> {
+                if (nv.getMail().contains(search)) {
+                    listSearchKH.add(nv);
+                }
+            }
+            case 5 -> {
+                if (nv.getSDT().contains(search)) {
+                    listSearchKH.add(nv);
+                }
+            }
+            case 6 -> {
+                String trangThai = "Ngừng Hoạt Động";
+                if (nv.isTrangThai()) {
+                    trangThai = "Đang Hoạt Động";
+                }
+                if (trangThai.contains(search)) {
+                    listSearchKH.add(nv);
+                }
+            }
+            default -> {
+
+            }
         }
-        return null;
-    }
-    
-    public static void main(String[] args) {
-        List<KhachHang> lists = new KhachHangService().getAllKhachHang();
-        for (KhachHang kh : lists) {
-            System.out.println(kh.toString());
-        }
+        return listSearchKH;
     }
 
 }

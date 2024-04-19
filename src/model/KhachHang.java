@@ -9,6 +9,7 @@ package model;
  * @author dinhq
  */
 public class KhachHang {
+
     private int ID;
     private String Ten;
     private String TenDem;
@@ -17,13 +18,12 @@ public class KhachHang {
     private String ngaySinh;
     private String mail;
     private String SDT;
-   
-    
+    private boolean trangThai;
 
     public KhachHang() {
     }
 
-    public KhachHang(int ID, String Ten, String TenDem, String ho, Boolean gioiTinh, String ngaySinh, String mail, String SDT) {
+    public KhachHang(int ID, String Ten, String TenDem, String ho, Boolean gioiTinh, String ngaySinh, String mail, String SDT, boolean trangThai) {
         this.ID = ID;
         this.Ten = Ten;
         this.TenDem = TenDem;
@@ -32,6 +32,15 @@ public class KhachHang {
         this.ngaySinh = ngaySinh;
         this.mail = mail;
         this.SDT = SDT;
+        this.trangThai = trangThai;
+    }
+
+    public boolean isTrangThai() {
+        return trangThai;
+    }
+
+    public void setTrangThai(boolean trangThai) {
+        this.trangThai = trangThai;
     }
 
     public int getID() {
@@ -97,7 +106,5 @@ public class KhachHang {
     public void setSDT(String SDT) {
         this.SDT = SDT;
     }
-
-    
 
 }

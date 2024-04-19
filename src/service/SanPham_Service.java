@@ -26,6 +26,7 @@ public class SanPham_Service {
     public List<SanPham> listSpHD = new ArrayList<>();
     public List<SanPham> listSpCHD = new ArrayList<>();
     public List<SanPham> listAllSp = new ArrayList<>();
+    public List<SanPham> listSearchSP = new ArrayList<>();
 
     public void getAll() throws SQLException, SQLException {
         listSpHD.clear();
@@ -33,7 +34,7 @@ public class SanPham_Service {
         listSpCHD.clear();
         con = db.openConnection();
         sql = """
-              select sp.Id, sp.Ten, sp.So_tuong_ton, sp.Gia_nhap, Sp.Gia_ban, sp.Mo_ta, n.Chi_Tiet,m.Chi_Tiet,dmsp.Chi_Tiet,sz.Chi_Tiet,cl.Chi_Tiet,th.Chi_Tiet,sp.IdKM, sp.Trang_thai from SanPham sp
+              select sp.Id, sp.Ten, sp.So_tuong_ton, sp.Gia_nhap, Sp.Gia_ban, sp.Mo_ta, n.Chi_Tiet,m.Chi_Tiet,dmsp.Chi_Tiet,sz.Chi_Tiet,cl.Chi_Tiet,th.Chi_Tiet,sp.IdKM, sp.Trang_thai ,sp.Tien_Km from SanPham sp
                                                         join NSX n on sp.IdNsx = n.Id
                                                         join ThuongHieu th on th.Id = sp.IdTH
                                                         join MauSac m on m.Id = sp.IdMauSac
@@ -46,12 +47,19 @@ public class SanPham_Service {
             rs = ps.executeQuery();
 
             while (rs.next()) {
+                double giaBan;
+                if (rs.getDouble(15) == 0) {
+                    giaBan = rs.getDouble("Gia_ban");
+                } else {
+                    giaBan = rs.getDouble("Gia_ban") - rs.getDouble(15);
+                }
+
                 if (rs.getBoolean(14)) {
                     SanPham sp = new SanPham(
                             rs.getInt("Id"),
                             rs.getString("Ten"),
                             rs.getDouble("Gia_nhap"),
-                            rs.getDouble("Gia_ban"),
+                            giaBan,
                             rs.getInt("So_tuong_ton"),
                             rs.getString(7),
                             rs.getString(12),
@@ -69,7 +77,7 @@ public class SanPham_Service {
                             rs.getInt("Id"),
                             rs.getString("Ten"),
                             rs.getDouble("Gia_nhap"),
-                            rs.getDouble("Gia_ban"),
+                            giaBan,
                             rs.getInt("So_tuong_ton"),
                             rs.getString(7),
                             rs.getString(12),
@@ -150,5 +158,54 @@ public class SanPham_Service {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public List<SanPham> cbxIndex(int key, SanPham sp, String search) {
+        switch (key) {
+            case 0 -> {
+                if (String.valueOf(sp.getIdSP()).contains(search)) {
+                    listSearchSP.add(sp);
+                }
+            }
+            case 1 -> {
+                if (sp.getTenSP().contains(search)) {
+                    listSearchSP.add(sp);
+                }
+            }
+            case 2 -> {
+                if (sp.getXuatSu().contains(search)) {
+                    listSearchSP.add(sp);
+                }
+            }
+            case 3 -> {
+                if (sp.getHang().contains(search)) {
+                    listSearchSP.add(sp);
+                }
+            }
+            case 4 -> {
+                if (sp.getMauSac().contains(search)) {
+                    listSearchSP.add(sp);
+                }
+            }
+            case 5 -> {
+                if (sp.getSize().contains(search)) {
+                    listSearchSP.add(sp);
+                }
+            }
+            case 6 -> {
+                if (sp.getChatLieu().contains(search)) {
+                    listSearchSP.add(sp);
+                }
+            }
+            case 7 -> {
+                if (sp.getDanhMuc().contains(search)) {
+                    listSearchSP.add(sp);
+                }
+            }
+            default -> {
+
+            }
+        }
+        return listSearchSP;
     }
 }
