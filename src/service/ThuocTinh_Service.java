@@ -70,6 +70,7 @@ public class ThuocTinh_Service {
                 ps.executeUpdate();
             }
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

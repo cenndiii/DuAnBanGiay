@@ -26,13 +26,13 @@ public class ChonKhachHang_view extends javax.swing.JFrame {
     KhachHangService khs = new KhachHangService();
     int index = -1;
     public String ten, sdt;
-
+    List<KhachHang> listKhOn = khs.listKHOn;
     public ChonKhachHang_view(JTextField txtName, JTextField txtPhoneNumber, JTextField txtIdKh) {
         initComponents();
         this.txtId = txtIdKh;
         this.txtName = txtName;
         this.txtPhoneNumber = txtPhoneNumber;
-        fillTableGuest(khs.getAllKhachHang());
+        fillTableGuest(listKhOn);
         setLocationRelativeTo(null);
         setTitle("Chọn Khách Hàng");
     }
@@ -42,6 +42,7 @@ public class ChonKhachHang_view extends javax.swing.JFrame {
     }
 
     public void fillTableGuest(List<KhachHang> list) {
+        khs.getAllKhachHang();
         dtm = (DefaultTableModel) tblChooseGuest.getModel();
         dtm.setRowCount(0);
         String Ten = null;
@@ -101,17 +102,7 @@ public class ChonKhachHang_view extends javax.swing.JFrame {
             }
         });
 
-        lblExitChooseGuest.setIcon(new javax.swing.JLabel() {
-            public javax.swing.Icon getIcon() {
-                try {
-                    return new javax.swing.ImageIcon(
-                        new java.net.URL("file:/D:/DuAn1/DuAn1_Pro1041/logos/images-removebg-preview.png")
-                    );
-                } catch (java.net.MalformedURLException e) {
-                }
-                return null;
-            }
-        }.getIcon());
+        lblExitChooseGuest.setIcon(new javax.swing.ImageIcon("D:\\DuAn1\\DuAn1_Pro1041\\logos\\images-removebg-preview.png")); // NOI18N
         lblExitChooseGuest.setOpaque(true);
         lblExitChooseGuest.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -135,10 +126,10 @@ public class ChonKhachHang_view extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 617, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblExitChooseGuest))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 617, Short.MAX_VALUE))
+                        .addComponent(lblExitChooseGuest)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -196,12 +187,10 @@ public class ChonKhachHang_view extends javax.swing.JFrame {
 
     private void lblExitChooseGuestMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExitChooseGuestMouseEntered
         lblExitChooseGuest.setBackground(Color.decode("#CCD3CA"));
-        lblExitChooseGuest.setForeground(Color.decode("#FF204E"));
     }//GEN-LAST:event_lblExitChooseGuestMouseEntered
 
     private void lblExitChooseGuestMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExitChooseGuestMouseExited
-        lblExitChooseGuest.setBackground(new Color(0, 0, 0, 0));
-        lblExitChooseGuest.setForeground(Color.black);
+        lblExitChooseGuest.setBackground(Color.decode("#d6d9df"));
     }//GEN-LAST:event_lblExitChooseGuestMouseExited
 
     /**

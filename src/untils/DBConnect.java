@@ -20,19 +20,4 @@ public class DBConnect {
         return DriverManager.getConnection("jdbc:sqlserver://localhost;databaseName=DuAn1_FourShoes;user=sa;password=1234;characterEncoding=UTF-8;encrypt=true;trustservercertificate=true");
     }
 
-    public void a() {
-        try {
-            Statement s = openConnection().createStatement();
-            ResultSet rs = s.executeQuery("Select * from MauSac");
-            while (rs.next()) {
-                System.out.println(rs.getString(2));
-            }
-        } catch (Exception e) {
-        }
-    }
-
-    public static void main(String[] args) {
-        DBConnect d = new DBConnect();
-        d.a();
-    }
 }

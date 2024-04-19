@@ -26,7 +26,7 @@ public class KhuyenMai_Service {
         try {
             double tienGiam;
             java.sql.Date f = new java.sql.Date(km.getNgayBatDau().getTime());
-            java.sql.Date l = new java.sql.Date(km.getNgayKetThuc().getTime());           
+            java.sql.Date l = new java.sql.Date(km.getNgayKetThuc().getTime());
             PreparedStatement ps = db.openConnection().prepareStatement("insert into KhuyenMai(Id,Ten,Ngay_bat_dau,Ngay_ket_thuc,Trang_thai,Hinh_thuc_KM,Gia_tri_giam) values (?,?,?,?,?,?,?)");
             ps.setInt(1, km.getId());
             ps.setString(2, km.getTieuDe());
@@ -42,7 +42,7 @@ public class KhuyenMai_Service {
                 if (km.isHinhThucKm()) {
                     // giảm theo VND
                     tienGiam = km.getGiaTri();
-                }else{
+                } else {
                     tienGiam = km.getGiaTri() * sp.getGiaBan() / 100;
                 }
                 ps.setDouble(2, tienGiam);
@@ -55,4 +55,51 @@ public class KhuyenMai_Service {
         }
     }
 
+    public void updateVoucher(KhuyenMai km, List<SanPham> listIdSp) {
+        try {
+            double tienGiam;
+            java.sql.Date f = new java.sql.Date(km.getNgayBatDau().getTime());
+            java.sql.Date l = new java.sql.Date(km.getNgayKetThuc().getTime());
+            PreparedStatement ps = db.openConnection().prepareStatement("update KhuyenMai set Ten = ?, Ngay_bat_dau = ?, Ngay_ket_thuc = ?, Trang_thai = ?, Hinh_thuc_KM = ?, Gia_tri_giam = ? where Id = ?");
+            ps.setString(1, km.getTieuDe());
+            ps.setDate(2, f);
+            ps.setDate(3, l);
+            ps.setBoolean(4, km.isTrangThai());
+            ps.setBoolean(5, km.isHinhThucKm());
+            ps.setDouble(6, km.getGiaTri());
+            ps.setInt(7, km.getId());
+            ps.executeUpdate();
+            ps = db.openConnection().prepareStatement("update SanPham set IdKM = null, Tien_Km = null where IdKM = ?");
+            ps.setInt(1, km.getId());
+            ps.executeUpdate();
+            for (SanPham sp : listIdSp) {
+                ps = db.openConnection().prepareStatement("update SanPham set IdKM = ? ,Tien_Km = ? where Id = ?");
+                ps.setInt(1, km.getId());
+                if (km.isHinhThucKm()) {
+                    // giảm theo VND
+                    tienGiam = km.getGiaTri();
+                } else {
+                    tienGiam = km.getGiaTri() * sp.getGiaBan() / 100;
+                }
+                ps.setDouble(2, tienGiam);
+                ps.setInt(3, sp.getIdSP());
+                ps.executeUpdate();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void deleteVoucher(int idKm){
+        try {
+            PreparedStatement ps = db.openConnection().prepareStatement("update SanPham set IdKM = null, Tien_Km = null where IdKM = ?");
+            ps.setInt(1, idKm);
+            ps.executeUpdate();
+            ps = db.openConnection().prepareStatement("delete from KhuyenMai where Id = ?");
+            ps.setInt(1, idKm);
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
 }
